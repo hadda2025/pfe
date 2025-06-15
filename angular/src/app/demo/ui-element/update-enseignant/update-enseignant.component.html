@@ -1,0 +1,47 @@
+<div class="update-form-container p-4">
+    <h2 class="mb-4">🧑‍🏫 Modifier un enseignant</h2>
+  
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="form-group mb-3">
+        <label for="nom">Nom</label>
+        <input id="nom" formControlName="nom" type="text" class="form-control" />
+      </div>
+  
+      <div class="form-group mb-3">
+        <label for="prenom">Prénom</label>
+        <input id="prenom" formControlName="prenom" type="text" class="form-control" />
+      </div>
+  
+      <div class="form-group mb-3">
+        <label for="adress">Adresse</label>
+        <input id="adress" formControlName="adress" type="text" class="form-control" />
+      </div>
+  
+      <div class="form-group mb-3">
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" class="form-control" />
+      </div>
+  
+      <div class="form-group mb-3">
+        <label for="telephone">Téléphone</label>
+        <input id="telephone" formControlName="telephone" type="text" class="form-control" />
+      </div>
+  
+      <div class="form-group mb-3">
+        <label for="classeDepartement">Classe / Département</label>
+        <input id="classeDepartement" formControlName="classeDepartement" type="text" class="form-control" />
+      </div>
+  
+   
+  
+      <div class="form-group mb-4">
+        <label for="dateCreation">Date de création</label>
+        <input id="dateCreation" formControlName="dateCreation" type="date" class="form-control" />
+      </div>
+  
+      <button type="submit" [disabled]="userForm.invalid" class="btn btn-success">
+        ✅ Mettre à jour
+      </button>
+    </form>
+  </div>
+  

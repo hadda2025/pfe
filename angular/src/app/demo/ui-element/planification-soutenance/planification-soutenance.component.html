@@ -1,0 +1,119 @@
+<div class="planning-container">
+  <h4> Planification d'une soutenance📚🕒📅</h4>
+
+  <!-- Alerte -->
+  <div *ngIf="alertMessage" class="alert-box">
+    {{ alertMessage }}
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Sujet -->
+    <div class="form-group">
+      <label for="sujet">Sujet de fin d'étude :</label>
+      <select id="sujet" formControlName="sujetfinetude" (change)="onSujetSelect()">
+        <option value="">-- Choisir un sujet --</option>
+        <option *ngFor="let sujet of sujets" [value]="sujet._id">{{ sujet.namesujet }}</option>
+      </select>
+    </div>
+
+    <!-- Étudiants -->
+<div class="form-group">
+  <label for="etudiants">Étudiant(s) :</label>
+  <select id="etudiants" multiple size="5" formControlName="student" class="form-control">
+    <option *ngFor="let student of students" [value]="student._id">
+      {{ student.firstName }} {{ student.lastName }}
+    </option>
+  </select>
+</div>
+
+    <!-- Jury affecté automatiquement -->
+    <div class="form-group jury-affiche"
+      *ngIf="form.get('examinateur')?.value || form.get('president')?.value || form.get('rapporteur')?.value">
+      <h4>👩‍⚖️👩‍🎓🧑‍🎓 Jury Affecté :</h4>
+      <p *ngIf="form.get('examinateur')?.value"><strong>Examinateur :</strong> {{ subject.examinateur.firstName }} {{
+        subject.examinateur.lastName }}</p>
+      <p *ngIf="form.get('president')?.value"><strong>Président :</strong> {{ subject.president.firstName }} {{
+        subject.president.lastName }}</p>
+      <p *ngIf="form.get('rapporteur')?.value"><strong>Rapporteur :</strong> {{ subject.rapporteur.firstName }} {{
+        subject.rapporteur.lastName }} </p>
+    </div>
+
+  <!-- Salle -->
+    <div class="planification-container" [formGroup]="form">
+
+
+
+<!-- SALLE -->
+  <div class="form-group">
+    <label for="rooms">Salle :</label>
+    <select
+      id="rooms"
+      formControlName="room"
+      (change)="rechercherSeancesDisponibles()"
+    >
+      <option value="">-- Choisir une salle --</option>
+      <option *ngFor="let room of salles" [value]="room._id">
+        {{ room.nom }}
+      </option>
+    </select>
+  </div>
+
+
+  <!-- DATE -->
+  <div class="form-group">
+    <label for="dates">Date :</label>
+    <select
+      id="dates"
+      formControlName="plage"
+      (change)="rechercherSeancesDisponibles()"
+    >
+      <option value="">-- Choisir une date --</option>
+      <option
+        *ngFor="let date of plagesDates"
+        [value]="date._id"
+      >
+        {{ date.dateDebut | date: 'dd/MM/yyyy' }}
+      </option>
+    </select>
+  </div>
+
+  
+  <!-- SÉANCE -->
+  <div class="form-group">
+    <label for="seances">Séance :</label>
+    <select
+      id="seances"
+      formControlName="seance"
+      (change)="rechercherSeancesDisponiblesDate()"
+    >
+      <option value="">-- Choisir une séance --</option>
+      <option
+        *ngFor="let seance of seancesDisponibles"
+        [value]="seance._id"
+      >
+        {{ seance.heureDebut }} - {{ seance.heureFin }}
+      </option>
+    </select>
+  </div>
+</div>
+
+
+   
+
+    <!-- Session -->
+    <div class="form-group">
+      <label for="session">Session :</label>
+      <select id="session" formControlName="session">
+        <option value="">-- Choisir une session --</option>
+        <option *ngFor="let session of sessions" [value]="session._id">
+          {{ session.namesession }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Boutons -->
+    <div class="text-end">
+      <button type="submit">✅ Valider la planification</button>
+    </div>
+  </form>
+</div>

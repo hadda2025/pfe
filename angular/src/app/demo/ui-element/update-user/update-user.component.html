@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="row gutters">
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="account-settings">
+            <div class="user-profile">
+              <div class="user-avatar">
+                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="User Avatar">
+              </div>
+              <h5 class="user-name">{{ userForm.get('firstName')?.value }} {{ userForm.get('lastName')?.value }}</h5>
+              <h6 class="user-email">{{ userForm.get('email')?.value }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+      <div class="card h-100">
+        <div class="card-body">
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <div class="row gutters">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="firstName">Nom</label>
+                  <input id="firstName" formControlName="firstName" type="text" class="form-control" placeholder="Entrez le nom">
+                </div>
+              </div>
+
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="lastName">Prénom</label>
+                  <input id="lastName" formControlName="lastName" type="text" class="form-control" placeholder="Entrez le prénom">
+                </div>
+              </div>
+
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input id="email" formControlName="email" type="email" class="form-control" placeholder="Entrez l'email">
+                </div>
+              </div>
+
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="phone">Numéro de téléphone</label>
+                  <input id="phone" formControlName="phone" type="text" class="form-control" placeholder="Entrez le numéro de téléphone">
+                </div>
+              </div>
+
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="adress">Adresse</label>
+                  <input id="adress" formControlName="adress" type="text" class="form-control" placeholder="Entrez l'adresse">
+                </div>
+              </div>
+
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="cin">CIN</label>
+                  <input id="cin" formControlName="cin" type="text" class="form-control" placeholder="Entrez le CIN">
+                </div>
+              </div>
+
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="password">Mot de passe</label>
+                  <input id="password" formControlName="password" type="password" class="form-control" placeholder="Entrez le mot de passe">
+                </div>
+              </div>
+            </div>
+
+            <div class="row gutters">
+              <div class="col-12 text-right">
+               
+                <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Mettre à jour</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

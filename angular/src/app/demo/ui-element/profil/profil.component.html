@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profil utilisateur</title>
+  <link rel="stylesheet" href="/src/assets/admin.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+  <div class="profile-container">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <span>{{ user?.firstName?.charAt(0) || 'A' }}</span>
+        </div>
+        <div class="profile-basic-info">
+          <h2>{{ user?.firstName }} {{ user?.lastName }}</h2>
+          <p><i class="fas fa-envelope"></i> {{ user?.email }}</p>
+        </div>
+      </div>
+
+      <div class="profile-details">
+        <ul>
+          <li><i class="fas fa-phone"></i> <strong>Téléphone:</strong> {{ user?.phone }}</li>
+          <li><i class="fas fa-map-marker-alt"></i> <strong>Adresse:</strong> {{ user?.adress }}</li>
+          <li><i class="fas fa-id-card"></i> <strong>CIN:</strong> {{ user?.cin }}</li>
+        </ul>
+      </div>
+
+      <div class="profile-actions">
+        <button class="btn btn-primary" [routerLink]="['/component/update-profil', user._id]">
+          <i class="fas fa-pen"></i> Modifier le profil
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

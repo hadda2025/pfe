@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center mb-2 px-2">
+      <h4>👨‍🏫👩‍🏫 Liste des enseignants</h4>
+      <div class="form-group mb-0">
+        <input type="text" class="form-control form-control-sm" id="searchInput"
+          placeholder="Rechercher..." [(ngModel)]="searchText" style="min-width: 200px;" />
+      </div>
+    </div>
+
+    <div class="table-responsive px-2 pb-2">
+      <table class="table table-sm table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Département</th>
+            <th>Adresse</th>
+            <th>Créé le</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let teacher of filteredTeachers; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ teacher.firstName }}</td>
+            <td>{{ teacher.lastName }}</td>
+            <td>{{ teacher.email }}</td>
+            <td>{{ teacher.phone }}</td>
+            <td>{{ teacher.classeDepartement }}</td>
+            <td>{{ teacher.adress }}</td>
+            <td>{{ teacher.dateCreation | date: 'dd/MM/yyyy' }}</td>
+            <td>
+              <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-primary"
+                  [routerLink]="['/component/update-enseignant', teacher._id]">
+                  ✏️
+                </button>
+                <button type="button" class="btn btn-danger" (click)="deleteTeacher(teacher._id)">
+                  🗑️
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

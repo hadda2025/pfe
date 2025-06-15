@@ -1,0 +1,117 @@
+
+
+/* Carte du formulaire */
+.form-card {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+
+/* Titre du formulaire */
+.form-title {
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #222222;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* Grille pour aligner les champs */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 30px;
+}
+
+/* Chaque groupe de champ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444444;
+  font-size: 0.95rem;
+}
+
+/* Inputs & select */
+.form-group input,
+.form-group select {
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1.8px solid #cbd5e1;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+  outline-offset: 2px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+}
+
+/* Messages d’erreur */
+.error {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* Pied de formulaire - boutons */
+.form-footer {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Bouton Ajouter */
+.btn-add {
+  background-color: #25eb3c;
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-add:hover {
+  background-color: #1e40af;
+}
+
+/* Bouton Annuler */
+.btn-cancel {
+  background-color: #e5e7eb;
+  color: #374151;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #d1d5db;
+}
+
+/* Adaptation mobile */
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-card {
+    padding: 20px 25px;
+  }
+}

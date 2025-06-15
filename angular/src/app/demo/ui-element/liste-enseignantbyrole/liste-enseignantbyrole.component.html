@@ -1,0 +1,98 @@
+<div class="container mt-4">
+  <h2 class="text-xl font-semibold mb-4">Planning par enseignant</h2>
+
+  <!-- Formulaire de recherche -->
+  <form [formGroup]="searchForm" class="space-y-4 mb-6">
+    <div>
+      <label class="block font-medium">Nom Enseignant :</label>
+      <input formControlName="firstName" type="text" class="w-full border p-2 rounded" />
+    </div>
+  </form>
+
+  <!-- Bouton Export PDF -->
+  <button (click)="exportToPDF()" class="export-green mb-4">Exporter en PDF</button>
+
+  <!-- Table de résultats -->
+  <div *ngIf="resultatsFiltres.length > 0">
+    <div #pdfContent>
+      <div class="overflow-auto">
+        <table class="min-w-full table-auto border border-gray-300 text-sm">
+          <thead class="bg-gray-100 text-left">
+            <tr>
+              <th class="border px-4 py-2">Nom Enseignant</th>
+              <th class="border px-4 py-2">Rôle</th>
+              <th class="border px-4 py-2">Étudiants</th>
+              <th class="border px-4 py-2">Date</th>
+              <th class="border px-4 py-2">Heure</th>
+              <th class="border px-4 py-2">Sujet</th>
+              <th class="border px-4 py-2">Entreprise</th>
+              <th class="border px-4 py-2">Session</th>
+              <th class="border px-4 py-2">Salle</th>
+              <th class="border px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let res of resultatsFiltres" class="hover:bg-gray-50">
+              <td class="border px-4 py-2">
+                {{
+                  res.role === 'Président' ? res.soutenance.president?.firstName + ' ' + res.soutenance.president?.lastName :
+                  res.role === 'Rapporteur' ? res.soutenance.rapporteur?.firstName + ' ' + res.soutenance.rapporteur?.lastName :
+                  res.role === 'Examinateur' ? res.soutenance.examinateur?.firstName + ' ' + res.soutenance.examinateur?.lastName :
+                  'Inconnu'
+                }}
+              </td>
+              <td class="border px-4 py-2 text-green-700 font-semibold">{{ res.role }}</td>
+              <td class="border px-4 py-2">
+                <ul class="list-disc pl-4">
+                  <li *ngFor="let etu of res.soutenance.sujetfinetude?.student">
+                    {{ etu.firstName }} {{ etu.lastName }}
+                  </li>
+                </ul>
+              </td>
+              <td class="border px-4 py-2">{{ res.soutenance.plage.dateDebut | date: 'dd/MM/yyyy' }}</td>
+              <td class="border px-4 py-2">{{ res.soutenance.seance.heureDebut }} - {{ res.soutenance.seance.heureFin }}</td>
+              <td class="border px-4 py-2">{{ res.soutenance.sujetfinetude?.namesujet }}</td>
+              <td class="border px-4 py-2">{{ res.soutenance.sujetfinetude?.entreprise }}</td>
+              <td class="border px-4 py-2">{{ res.soutenance.session?.namesession }}</td>
+              <td class="border px-4 py-2">{{ res.soutenance.room?.nom }} ({{ res.soutenance.room?.bloc }})</td>
+              <td class="border px-4 py-2">
+                <button (click)="openSendMail(getEmail(res))" class="bg-blue-500 text-white px-2 py-1 rounded text-sm">
+                  Envoyer Email
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<br><br>
+  <!-- Message si aucun résultat -->
+  <div *ngIf="searchForm.value.firstName || searchForm.value.lastName">
+    <p *ngIf="resultatsFiltres.length === 0" class="text-red-600 mt-2">Aucun résultat trouvé.</p>
+  </div>
+
+  <!-- Modal d'envoi email -->
+  <div *ngIf="showSendMail" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-96 relative">
+      <h3 class="font-semibold mb-4 text-lg">Envoyer un fichier PDF par email</h3>
+
+      <form [formGroup]="sendMailForm" (ngSubmit)="onSendMail()">
+        <div class="mb-3">
+          <label>Email destinataire:</label>
+          <input type="email" formControlName="email" class="border p-2 rounded w-full"/>
+        </div>
+
+        <div class="mb-3">
+          <label>Sélectionner le fichier PDF:</label>
+          <input type="file" (change)="onFileSelected($event)" accept="application/pdf" class="border p-2 rounded w-full" />
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded" [disabled]="isSending">Envoyer</button> &nbsp;
+          <button type="button" class="bg-red-500 text-white px-4 py-2 rounded" (click)="closeSendMail()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+<div class="update-form-container p-4 shadow rounded bg-white">
+    <h2 class="mb-4">✏️ Mettre à jour les informations de la salle</h2>
+  
+    <form [formGroup]="salleForm" (ngSubmit)="onSubmit()">
+      <!-- Nom de la salle -->
+      <div class="form-group mb-3">
+        <label for="nom">🏷️ Nom de la salle</label>
+        <input
+          id="nom"
+          formControlName="nom"
+          type="text"
+          class="form-control"
+          placeholder="Nom de la salle"
+          [class.is-invalid]="salleForm.get('nom')?.invalid && salleForm.get('nom')?.touched"
+        />
+        <div *ngIf="salleForm.get('nom')?.invalid && salleForm.get('nom')?.touched" class="invalid-feedback">
+          Le nom est requis.
+        </div>
+      </div>
+  
+      <!-- Capacité -->
+      <div class="form-group mb-3">
+        <label for="capacite">👥 Capacité</label>
+        <input
+          id="capacite"
+          formControlName="capacite"
+          type="number"
+          class="form-control"
+          placeholder="Capacité"
+          [class.is-invalid]="salleForm.get('capacite')?.invalid && salleForm.get('capacite')?.touched"
+        />
+        <div *ngIf="salleForm.get('capacite')?.invalid && salleForm.get('capacite')?.touched" class="invalid-feedback">
+          <div *ngIf="salleForm.get('capacite')?.hasError('required')">La capacité est requise.</div>
+          <div *ngIf="salleForm.get('capacite')?.hasError('min')">Capacité minimale : 1.</div>
+        </div>
+      </div>
+  
+      <!-- Disponibilité -->
+      <div class="form-group mb-3">
+        <label for="disponibilite">⏰ Disponibilité</label>
+        <select
+          id="disponibilite"
+          formControlName="disponibilite"
+          class="form-select"
+          [class.is-invalid]="salleForm.get('disponibilite')?.invalid && salleForm.get('disponibilite')?.touched"
+        >
+          <option value="">-- Sélectionner --</option>
+          <option value="Matin (08:00 - 10:00)">Matin (08:00 - 10:00)</option>
+          <option value="Matin (10:00 - 12:00)">Matin (10:00 - 12:00)</option>
+          <option value="Après-midi (13:00 - 15:00)">Après-midi (13:00 - 15:00)</option>
+          <option value="Après-midi (15:00 - 17:00)">Après-midi (15:00 - 17:00)</option>
+          <option value="Journée complète">Journée complète</option>
+        </select>
+        <div *ngIf="salleForm.get('disponibilite')?.invalid && salleForm.get('disponibilite')?.touched" class="invalid-feedback">
+          La disponibilité est requise.
+        </div>
+      </div>
+  
+      <!-- Bloc -->
+      <div class="form-group mb-3">
+        <label for="bloc">🏢 Bloc / Étage</label>
+        <input
+          id="bloc"
+          formControlName="bloc"
+          type="text"
+          class="form-control"
+          placeholder="Bloc / Étage"
+          [class.is-invalid]="salleForm.get('bloc')?.invalid && salleForm.get('bloc')?.touched"
+        />
+        <div *ngIf="salleForm.get('bloc')?.invalid && salleForm.get('bloc')?.touched" class="invalid-feedback">
+          Le bloc est requis.
+        </div>
+      </div>
+  
+     
+  
+      <!-- Bouton -->
+      <div class="text-end">
+        <button type="submit" class="btn btn-primary" [disabled]="salleForm.invalid">
+          💾 Mettre à jour
+        </button>
+      </div>
+    </form>
+  </div>
+  

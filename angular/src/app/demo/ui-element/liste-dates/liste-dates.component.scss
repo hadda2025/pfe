@@ -1,0 +1,30 @@
+h4 {
+  color: #2c3e50;
+  margin: 0;
+}
+
+table {
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+th, td {
+  padding: 8px;
+  font-size: 0.85rem;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #3498db;
+  color: white;
+  text-align: center;
+}
+
+td {
+  vertical-align: middle;
+}
+
+.btn-group-sm .btn {
+  padding: 4px 6px;
+  font-size: 0.75rem;
+}

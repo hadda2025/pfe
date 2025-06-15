@@ -1,0 +1,25 @@
+<div class="ajouter-seance-container">
+  <h2>➕ Ajouter une Séance</h2>
+
+<form [formGroup]="seanceForm" (ngSubmit)="onSubmit()">
+    <!-- Heure de début -->
+    <div class="form-group">
+      <label for="heureDebut">Heure de début :</label>
+      <input type="time" id="heureDebut" formControlName="heureDebut" required />
+    </div>
+
+    <!-- Heure de fin -->
+    <div class="form-group">
+      <label for="heureFin">Heure de fin :</label>
+      <input type="time" id="heureFin" formControlName="heureFin" required />
+    </div>
+
+   
+
+    <!-- Bouton de soumission -->
+    <div class="form-actions">
+      <button type="submit" [disabled]="seanceForm.invalid">Ajouter</button>
+      
+    </div>
+  </form>
+</div>

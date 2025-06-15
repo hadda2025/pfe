@@ -1,0 +1,17 @@
+<p>Bonjour {{teacherName}},</p>
+
+<p>Voici la liste de vos soutenances prévues en tant que {{role}} :</p>
+
+<ul>
+  {{#each plannings}}
+    <li>
+      Sujet : <strong>{{subjectTitle}}</strong><br />
+      Date : {{date}}<br />
+      Heure : {{heureDebut}} - {{heureFin}}<br />
+      Salle : {{salle}}<br /><br />
+    </li>
+  {{/each}}
+</ul>
+
+<p>Cordialement,</p>
+<p>Administration des soutenances</p>

@@ -1,0 +1,139 @@
+<div class="row">
+  <div class="col-12">
+    <h2>🧑‍🎓 Ajouter Etudiant</h2>
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="p-4">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="nom" class="form-label">Nom</label>
+            <input type="text" id="nom" formControlName="nom" class="form-control" />
+            <div *ngIf="userForm.get('nom')?.invalid && userForm.get('nom')?.touched" class="text-danger">
+              <small *ngIf="userForm.get('nom')?.hasError('required')">Le nom est requis.</small>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="prenom" class="form-label">Prénom</label>
+            <input type="text" id="prenom" formControlName="prenom" class="form-control" />
+            <div *ngIf="userForm.get('prenom')?.invalid && userForm.get('prenom')?.touched" class="text-danger">
+              <small *ngIf="userForm.get('prenom')?.hasError('required')">Le prénom est requis.</small>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="email" class="form-label">Adresse e-mail</label>
+            <input type="email" id="email" formControlName="email" class="form-control" />
+            <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-danger">
+              <small *ngIf="userForm.get('email')?.hasError('required')">L'adresse e-mail est requise.</small>
+              <small *ngIf="userForm.get('email')?.hasError('email')">Veuillez entrer une adresse e-mail valide.</small>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="telephone" class="form-label">Numéro de téléphone</label>
+            <input type="text" id="telephone" formControlName="telephone" class="form-control" />
+            <div *ngIf="userForm.get('telephone')?.invalid && userForm.get('telephone')?.touched" class="text-danger">
+              <small *ngIf="userForm.get('telephone')?.hasError('required')">Le numéro de téléphone est requis.</small>
+              <small *ngIf="userForm.get('telephone')?.hasError('pattern')">Veuillez entrer un numéro de téléphone valide.</small>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="numInscription" class="form-label">Numéro d'inscription</label>
+            <input type="text" id="numInscription" formControlName="numInscription" class="form-control" />
+            <div *ngIf="userForm.get('numInscription')?.invalid && userForm.get('numInscription')?.touched" class="text-danger">
+              <small *ngIf="userForm.get('numInscription')?.hasError('required')">Le numéro d'inscription est requis.</small>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="cin" class="form-label">CIN</label>
+            <input type="text" id="cin" formControlName="cin" class="form-control" />
+            <div *ngIf="userForm.get('cin')?.invalid && userForm.get('cin')?.touched" class="text-danger">
+              <small *ngIf="userForm.get('cin')?.hasError('required')">Le CIN est requis.</small>
+              <small *ngIf="userForm.get('cin')?.hasError('pattern')">Le CIN doit comporter 8 chiffres.</small>
+            </div>
+          </div>
+
+             <div class="form-group">
+  <label for="classeDepartement">Département</label>
+  <select id="classeDepartement" class="form-control" formControlName="classeDepartement" (change)="onDepartementChange($event)">
+    <option value="">-- Sélectionner un département --</option>
+    <option value="informatique">Informatique</option>
+    <option value="electronique">Électronique</option>
+    <option value="mecanique">Mécanique</option>
+    <option value="autre">Autre</option>
+  </select>
+
+  <!-- Message d’erreur si non sélectionné -->
+  <div class="error" *ngIf="userForm.get('classeDepartement')?.touched && userForm.get('classeDepartement')?.hasError('required')">
+    Le département est obligatoire.
+  </div>
+</div>
+
+<!-- Champ texte visible seulement si "Autre" est sélectionné -->
+<div class="form-group mt-2" *ngIf="showAutreDepartementInput ">
+  <label for="autreDepartement">Veuillez préciser le département</label>
+  <input id="autreDepartement" type="text" class="form-control" formControlName="autreDepartement" placeholder="Nom du département">
+  <div class="error" *ngIf="userForm.get('autreDepartement')?.touched && userForm.get('autreDepartement')?.hasError('required')">
+    Ce champ est requis si vous avez choisi "Autre".
+  </div>
+</div>
+        
+
+<div class="form-group">
+  <label for="parcours">Parcours</label>
+  <select id="parcours"class="form-control" formControlName="parcours" (change)="onparcoursChange($event)">
+     <option value="">-- Sélectionner un parcours --</option>
+    <option value="GL">GL</option>
+    <option value="RSI">RSI</option>
+    <option value="SE">SE</option>
+    <option value="BD">BD</option>
+    <option value="autre">Autre</option>
+  </select>
+
+  <!-- Message d’erreur si non sélectionné -->
+  <div class="error" *ngIf="userForm.get('parcours')?.touched && userForm.get('parcours')?.hasError('required')">
+    Le département est obligatoire.
+  </div>
+</div>
+
+<!-- Champ texte visible seulement si "Autre" est sélectionné -->
+<div class="form-group mt-2" *ngIf="showAutreParcoursInput">
+  <label for="autreparcours">Veuillez préciser le parcours</label>
+  <input id="autreparcours" type="text" class="form-control" formControlName="autreparcours" placeholder="Nom du parcours">
+  <div class="error" *ngIf="userForm.get('autreparcours')?.touched && userForm.get('autreparcours')?.hasError('required')">
+    Ce champ est requis si vous avez choisi "Autre".
+  </div>
+</div>
+
+        
+
+          <div class="col-md-6">
+            <label for="dateCreation" class="form-label">Date de création</label>
+            <input type="date" id="dateCreation" formControlName="dateCreation" class="form-control" />
+            <div *ngIf="userForm.get('dateCreation')?.invalid && userForm.get('dateCreation')?.touched" class="text-danger">
+              <small *ngIf="userForm.get('dateCreation')?.hasError('required')">La date de création est requise.</small>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="adress" class="form-label">Adresse</label>
+            <input type="text" id="adress" formControlName="adress" class="form-control" />
+            <div *ngIf="userForm.get('adress')?.invalid && userForm.get('adress')?.touched" class="text-danger">
+              <small *ngIf="userForm.get('adress')?.hasError('required')">La adresse est requise.</small>
+            </div>
+          </div>
+
+          <div class="col-12 text-end mt-4">
+            <button type="submit" class="btn btn-success me-2" [disabled]="userForm.invalid">
+             Ajouter
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="onCancel()">
+              Annuler
+            </button>
+          </div>
+        </div>
+      </form>
+   
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="search-container">
+      <h2 class="text-xl font-semibold mb-4">Planning par salle </h2>
+  <select [(ngModel)]="selectedRoomId">
+    <option value="">-- Choisir une salle --</option>
+    <option *ngFor="let salle of salles" [value]="salle._id">{{ salle.nom }}</option>
+  </select>
+  <button (click)="onSearchByRoomId()">Rechercher</button>
+</div>
+
+
+
+<!-- Bouton pour exporter -->
+<div *ngIf="soutenances.length > 0" class="export-container">
+  <button (click)="exportToPDF()">Exporter en PDF</button>
+</div>
+
+<div class="table-container" *ngIf="soutenances.length > 0">
+  <table id="planning-table">
+    <thead>
+      <tr>
+        <th>Salle</th>
+        <th>Sujet</th>
+        <th>Étudiant</th>
+        <th>Date</th>
+        <th>Heure</th>
+        <th>Jury</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of soutenances">
+        <td>{{ s.room?.nom }}</td>
+        <td>{{ s.sujetfinetude?.namesujet }}</td>
+        <td>
+          <div *ngFor="let etud of s.sujetfinetude?.student">
+            {{ etud.firstName }} {{ etud.lastName }}
+          </div>
+        </td>
+        <td>{{ s.plage?.dateDebut }}</td>
+        <td>{{ s.seance?.heureDebut }} - {{ s.seance?.heureFin }}</td>
+        <td>
+          <div>{{ s.president?.firstName }} {{ s.president?.lastName }} (Président)</div>
+          <div>{{ s.rapporteur?.firstName }} {{ s.rapporteur?.lastName }} (Rapporteur)</div>
+          <div>{{ s.examinateur?.firstName }} {{ s.examinateur?.lastName }} (Examinateur)</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

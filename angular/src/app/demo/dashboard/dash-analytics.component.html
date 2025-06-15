@@ -1,0 +1,89 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Tableau de bord des statistiques</h2>
+
+ 
+  <!-- Graphique 2 : Répartition des soutenances par enseignant -->
+  <div class="card mb-4 p-3 shadow rounded">
+    <h4 class="mb-3">{{ chartSoutenancesTeacher.title.text }}</h4>
+    <apx-chart
+      [series]="chartSoutenancesTeacher.series"
+      [chart]="chartSoutenancesTeacher.chart"
+      [labels]="chartSoutenancesTeacher.labels"
+      [title]="chartSoutenancesTeacher.title"
+    ></apx-chart>
+  </div>
+
+  <!-- Graphique 3 : Affectation des sujets avec les membres du jury -->
+<div class="card mb-4 p-3 shadow rounded" *ngIf="chartSujetJuryDonut.series.length > 0">
+  <h4 class="mb-3">{{ chartSujetJuryDonut.title.text }}</h4>
+  <apx-chart
+    [series]="chartSujetJuryDonut.series"
+    [chart]="chartSujetJuryDonut.chart"
+    [labels]="chartSujetJuryDonut.labels"
+    [title]="chartSujetJuryDonut.title"
+    [plotOptions]="chartSujetJuryDonut.plotOptions"
+    [dataLabels]="chartSujetJuryDonut.dataLabels"
+    [legend]="chartSujetJuryDonut.legend"
+    height="350"
+  ></apx-chart>
+</div>
+
+
+  <!-- Liste des soutenances planifiées -->
+  <div class="table-container mt-5">
+    <h2>Liste des soutenances planifiées</h2>
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>#</th>
+          <th>Date</th>
+          <th>Heure</th>
+          <th>Session</th>
+          <th>Salle</th>
+          <th>Sujet</th>
+          <th>Entreprise</th>
+          <th>Étudiants</th>
+          <th>Encadrant Externe</th>
+          <th>Président</th>
+          <th>Rapporteur</th>
+          <th>Examinateur</th>
+          <th>Rapport</th>
+          <th>PV</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let soutenance of soutenances; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ soutenance.plage?.dateDebut | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ soutenance.seance?.heureDebut }} - {{ soutenance.seance?.heureFin }}</td>
+          <td>{{ soutenance.session?.namesession }}</td>
+          <td>{{ soutenance.room?.nom }} ({{ soutenance.room?.bloc }})</td>
+          <td>{{ soutenance.sujetfinetude?.namesujet }}</td>
+          <td>{{ soutenance.sujetfinetude?.entreprise }}</td>
+          <td>
+            <ul class="mb-0">
+              <li *ngFor="let etudiant of soutenance.sujetfinetude?.student">
+                {{ etudiant.firstName }} {{ etudiant.lastName }}
+              </li>
+            </ul>
+          </td>
+          <td>{{ soutenance.sujetfinetude?.encadrant_externe }}</td>
+          <td>{{ soutenance.president?.firstName }} {{ soutenance.president?.lastName }}</td>
+          <td>{{ soutenance.rapporteur?.firstName }} {{ soutenance.rapporteur?.lastName }}</td>
+          <td>{{ soutenance.examinateur?.firstName }} {{ soutenance.examinateur?.lastName }}</td>
+          <td>
+            <a *ngIf="soutenance.sujetfinetude?.namesujet"
+               [href]="'http://localhost:3000/documents/sujet/' + soutenance.sujetfinetude._id"
+               target="_blank" rel="noopener noreferrer">
+              Voir
+            </a>
+            <span *ngIf="!soutenance.sujetfinetude?.namesujet" class="text-muted">Non déposé</span>
+          </td>
+          <td>
+            <a [routerLink]="['/component/pv', soutenance._id]">PV</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

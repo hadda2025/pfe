@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-12">
+    <h2>📅 Ajouter une Session</h2>
+    <form [formGroup]="sessionForm" (ngSubmit)="onSubmit()" class="p-4">
+      <div class="row g-3">
+
+        <div class="col-md-6">
+          <label for="namesession" class="form-label">Nom de la session</label>
+          <input type="text" id="namesession" formControlName="namesession" class="form-control" />
+          <div *ngIf="sessionForm.get('namesession')?.invalid && sessionForm.get('namesession')?.touched" class="text-danger">
+            <small *ngIf="sessionForm.get('namesession')?.hasError('required')">Le nom de la session est requis.</small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="Filiere" class="form-label">Filière</label>
+          <input type="text" id="Filiere" formControlName="Filiere" class="form-control" />
+          <div *ngIf="sessionForm.get('Filiere')?.invalid && sessionForm.get('Filiere')?.touched" class="text-danger">
+            <small *ngIf="sessionForm.get('Filiere')?.hasError('required')">La filière est requise.</small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="dateD" class="form-label">Date début</label>
+          <input type="date" id="dateD" formControlName="dateD" class="form-control" />
+          <div *ngIf="sessionForm.get('dateD')?.invalid && sessionForm.get('dateD')?.touched" class="text-danger">
+            <small *ngIf="sessionForm.get('dateD')?.hasError('required')">La date de début est requise.</small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="dateF" class="form-label">Date fin</label>
+          <input type="date" id="dateF" formControlName="dateF" class="form-control" />
+          <div *ngIf="sessionForm.get('dateF')?.invalid && sessionForm.get('dateF')?.touched" class="text-danger">
+            <small *ngIf="sessionForm.get('dateF')?.hasError('required')">La date de fin est requise.</small>
+          </div>
+        </div>
+       
+        <div class="col-12 text-end mt-4">
+          <button type="submit" class="btn btn-success me-2" [disabled]="sessionForm.invalid">Ajouter</button>
+          <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>

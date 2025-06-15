@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-12">
+    <h2>📁 Liste des documents</h2>
+
+    <div class="text-end mb-3">
+      <button class="btn btn-primary" (click)="addDocument()">➕ Ajouter un document</button>
+    </div>
+
+    <div *ngIf="loading" class="alert alert-info">
+      Chargement en cours...
+    </div>
+
+    <table *ngIf="!loading && documents.length > 0" class="table table-striped table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>📄 Nom</th>
+          <th>📂 Type</th>
+          <th>📎 Fichier</th>
+          <th>🧾 Sujet</th>
+          <th>⚙️ Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let doc of documents">
+          <td>{{ doc.name }}</td>
+          <td>{{ doc.type }}</td>
+          <td>
+            <a [href]="getFileUrl(doc.fileUrl)" target="_blank">{{ doc.fileUrl }}</a>
+          </td>
+          <td>{{ doc.sujetfinetude?.namesujet || 'N/A' }}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-2" (click)="editDocument(doc._id)">✏️ Modifier</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteDocument(doc._id)">🗑️ Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="!loading && documents.length === 0" class="alert alert-secondary">
+      Aucun document trouvé.
+    </div>
+  </div>
+</div>

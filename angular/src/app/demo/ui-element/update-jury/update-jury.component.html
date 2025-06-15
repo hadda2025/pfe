@@ -1,0 +1,38 @@
+<div class="update-form-container">
+  <h2>Mettre à jour l'affectation du jury</h2>
+
+  <form [formGroup]="juryForm" (ngSubmit)="onSubmit()">
+   <div class="form-row">
+  <div class="form-group">
+    <label for="president">Président :</label>
+    <select id="president" formControlName="president">
+      <option value="">-- Choisir un président --</option>
+      <option *ngFor="let teacher of filteredPresidents" [value]="teacher._id">
+        {{ teacher.firstName }} {{ teacher.lastName }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="rapporteur">Rapporteur :</label>
+    <select id="rapporteur" formControlName="rapporteur">
+      <option value="">-- Choisir un rapporteur --</option>
+      <option *ngFor="let teacher of filteredRapporteurs" [value]="teacher._id">
+        {{ teacher.firstName }} {{ teacher.lastName }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="examinateur">Examinateur  :
+   
+        {{ sujet.teacher.firstName }}    {{ sujet.teacher.lastName }}
+    </label>
+  </div>
+</div>
+
+    <button type="submit" [disabled]="juryForm.invalid" class="btn btn-primary">
+      Mettre à jour
+    </button>
+  </form>
+</div>

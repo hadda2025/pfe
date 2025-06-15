@@ -1,0 +1,69 @@
+<div class="planning-container">
+  <h2> 👩‍⚖️👩‍🎓🧑‍🎓Affectation des jurys</h2>
+
+  <div *ngIf="alertMessage" class="alert-box">
+    {{ alertMessage }}
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Sujet -->
+    <div class="form-group">
+      <label for="sujet">Sujet de fin d'étude :</label>
+      <select id="sujet" formControlName="sujetfinetude" (change)="onSujetSelect()">
+        <option value="">-- Choisir un sujet --</option>
+        <option *ngFor="let sujet of sujets" [value]="sujet._id">
+          {{ sujet.namesujet }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Étudiants -->
+    <div class="form-group">
+      <label>Étudiant 1 :</label>
+      <input type="text" [value]="students[0]?.firstName + ' ' + students[0]?.lastName" disabled />
+    </div>
+
+    <div class="form-group" *ngIf="students.length > 1">
+      <label>Étudiant 2 :</label>
+      <input type="text" [value]="students[1]?.firstName + ' ' + students[1]?.lastName" disabled />
+    </div>
+
+    <!-- Jury -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="president">Président :</label>
+        <select id="president" formControlName="president">
+          <option value="">-- Choisir un président --</option>
+          <option *ngFor="let teacher of filteredPresidents" [value]="teacher._id">
+            {{ teacher.firstName }} {{ teacher.lastName }}
+          </option>
+        </select>
+        <div class="error" *ngIf="form.get('president')?.invalid && form.get('president')?.touched">
+          Le président est requis.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="rapporteur">Rapporteur :</label>
+        <select id="rapporteur" formControlName="rapporteur">
+          <option value="">-- Choisir un rapporteur --</option>
+          <option *ngFor="let teacher of filteredRapporteurs" [value]="teacher._id">
+            {{ teacher.firstName }} {{ teacher.lastName }}
+          </option>
+        </select>
+        <div class="error" *ngIf="form.get('rapporteur')?.invalid && form.get('rapporteur')?.touched">
+          Le rapporteur est requis.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Examinateur :</label>
+        <input type="text" [value]="examinateurName" readonly />
+      </div>
+    </div>
+
+    <div class="text-end">
+      <button type="submit" [disabled]="form.invalid">✅ Valider l'affectation</button>
+    </div>
+  </form>
+</div>

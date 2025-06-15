@@ -1,0 +1,73 @@
+<div class="table-container">
+  <h2>👨‍🎓👨‍🎓Liste des soutenances planifiées</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Sujet</th>
+        <th>Entreprise</th>
+        <th>Étudiants</th>
+        <th>Encadrant Externe</th>
+        <th>Président</th>
+        <th>Rapporteur</th>
+        <th>Encadrant Interne</th>
+        <th>Date</th>
+        <th>seance</th>
+        <th>Session</th>
+        <th>Salle</th>
+        <th>Rapport</th>
+        <th>PV</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let soutenance of soutenances,let i=index">
+         <th scope="row">{{ i + 1 }}</th>
+        <td>{{ soutenance.sujetfinetude?.namesujet }}</td>
+        <td>{{ soutenance.sujetfinetude?.entreprise }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let etudiant of soutenance.sujetfinetude?.student">
+              {{ etudiant.firstName }} {{ etudiant.lastName }}
+            </li>
+          </ul>
+        </td>
+        <td>{{ soutenance.sujetfinetude?.encadrant_externe }}</td>
+        <td>{{ soutenance.president?.firstName }} {{ soutenance.president?.lastName }}</td>
+        <td>{{ soutenance.rapporteur?.firstName }} {{ soutenance.rapporteur?.lastName }}</td>
+        <td>{{ soutenance.examinateur?.firstName }} {{ soutenance.examinateur?.lastName }}</td>
+
+      
+        <td>{{ soutenance.dateDebut | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ soutenance.heureDebut || 'N/A' }} {{ soutenance.heureFin || 'N/A' }}</td>
+        <td>{{ soutenance.session?.namesession }}</td>
+        <td>{{ soutenance.room?.nom }} ({{ soutenance.room?.bloc }})</td>
+        <td>
+          <a *ngIf="soutenance.sujetfinetude?.namesujet" [href]="'http://localhost:3000/documents/sujet/' + soutenance.sujetfinetude._id"
+            target="_blank">Voir</a>
+          <span *ngIf="!soutenance.sujetfinetude?.namesujet" class="no">Non déposé</span>
+        </td>
+
+        <td> <a  [routerLink]="['/component/pv', soutenance._id]">PV</a></td>
+        
+
+      
+ <td>
+              <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-primary"
+                 [routerLink]="['/component/update-planification', soutenance._id]">
+                  ✏️
+                </button>
+                <button type="button" class="btn btn-danger" (click)="onDeleteSoutenance(soutenance._id)">
+                  🗑️
+                </button>
+              </div>
+            </td>
+
+
+
+      </tr>
+    </tbody>
+  </table>
+</div>

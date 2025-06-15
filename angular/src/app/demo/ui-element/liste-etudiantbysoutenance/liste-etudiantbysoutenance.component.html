@@ -1,0 +1,73 @@
+<div class="container mt-4">
+    <h2 class="text-xl font-semibold mb-4">Planning par etudiant</h2>
+    <div class="card border-primary shadow-sm rounded-3">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"></h5>
+      </div>
+  
+      <div class="card-body">
+        <!-- Formulaire de filtre -->
+        <form [formGroup]="earchForm" class="row g-3 mb-4">
+          <div class="col-md-6">
+            <label for="session" class="form-label text-primary">Session</label>
+            <select formControlName="session" class="form-select border-primary">
+              <option value="">Toutes</option>
+              <option *ngFor="let s of sessions" [value]="s._id">{{ s.namesession }}</option>
+            </select>
+          </div>
+  
+          <div class="col-md-6">
+            <label for="fullName" class="form-label text-primary">Nom complet</label>
+            <select formControlName="fullName" class="form-select border-primary">
+              <option value="">Tous</option>
+              <option *ngFor="let fullName of fullNames" [value]="fullName">{{ fullName }}</option>
+            </select>
+          </div>
+        </form>
+  
+        <!-- Résultats -->
+        <div *ngIf="resultatsFiltres.length === 0" class="alert alert-info">
+          Aucun résultat trouvé.
+        </div>
+  
+        <div *ngIf="resultatsFiltres.length > 0" class="table-responsive">
+          <table class="table table-bordered table-hover align-middle mt-2">
+            <thead class="bg-primary text-white text-center">
+              <tr>
+                <th>Nom complet</th>
+                <th>Sujet</th>
+                <th>Entreprise</th>
+                <th>Encadrant externe</th>
+                <th>Encadrant interne</th>
+                <th>Rapporteur</th>
+                <th>Président</th>
+                <th>Session</th>
+                <th>Date</th>
+                <th>Heure</th>
+                
+                <th>Salle</th>
+              </tr>
+            </thead>
+            <tbody> 
+            
+              <tr *ngFor="let r of resultatsFiltres">
+                <td>{{ r.etudiant.firstName }} {{ r.etudiant.lastName }}</td>
+                <td>{{ r.soutenance.sujetfinetude?.namesujet || '-' }}</td>
+                <td>{{ r.soutenance.sujetfinetude?.entreprise || '-' }}</td>
+                <td>{{ r.soutenance.sujetfinetude?.encadrant_externe || '-' }}</td>
+                <td>{{ r.soutenance.examinateur?.firstName }} {{ r.soutenance.examinateur?.lastName || '-' }}</td>
+                <td>{{ r.soutenance.rapporteur?.firstName }} {{ r.soutenance.rapporteur?.lastName || '-' }}</td>
+                <td>{{ r.soutenance.president?.firstName }} {{ r.soutenance.president?.lastName || '-' }}</td>
+                <td>{{ r.soutenance.session?.namesession || '-' }}</td>
+                <td>{{ r.soutenance.plage.dateDebut | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ r.soutenance.seance.heureDebut }} - {{ r.soutenance.seance.heureFin }}</td>
+                
+                <td>{{ r.soutenance.room?.nom || '-' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  

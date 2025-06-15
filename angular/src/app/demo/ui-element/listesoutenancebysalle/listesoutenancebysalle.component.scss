@@ -1,0 +1,104 @@
+/* Conteneur principal de recherche */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 20px;
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-container h2 {
+  flex: 1 1 100%;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.search-container select,
+.search-container button {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.search-container select {
+  min-width: 200px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+.search-container button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.search-container button:hover {
+  background-color: #2980b9;
+}
+
+/* Export PDF button */
+.export-container {
+  text-align: right;
+  margin: 10px 20px;
+}
+
+.export-container button {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.export-container button:hover {
+  background-color: #1e8449;
+}
+
+/* Tableau */
+.table-container {
+  margin: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow-x: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#planning-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+#planning-table th,
+#planning-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+  vertical-align: top;
+}
+
+#planning-table thead th {
+  background-color: #3498db;
+  color: white;
+  font-weight: 600;
+}
+
+#planning-table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+#planning-table tbody tr:hover {
+  background-color: #f0f3f5;
+}
+
+#planning-table td div {
+  margin-bottom: 4px;
+}

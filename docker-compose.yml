@@ -1,0 +1,169 @@
+version: '3.8'
+
+services:
+  # Angular Frontend
+  frontend:
+    build:
+      context: ./angular
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    container_name: gradient-able-frontend
+    environment:
+      - NODE_ENV=production
+    networks:
+      - app-network
+    restart: unless-stopped
+    depends_on:
+      - api
+
+  # Angular Development (uncomment for development)
+  # frontend-dev:
+  #   build:
+  #     context: ./angular
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #     - "4200:4200"
+  #   container_name: gradient-able-frontend-dev
+  #   environment:
+  #     - NODE_ENV=development
+  #   volumes:
+  #     - ./angular:/app
+  #     - /app/node_modules
+  #   networks:
+  #     - app-network
+  #   profiles:
+  #     - dev
+
+  # NestJS/Backend API
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "3000:3000"
+    container_name: gradient-able-api
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://admin:password123@mongodb:27017/api?authSource=admin
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-make-it-long-and-complex
+      - MAILER_HOST=smtp.gmail.com
+      - MAILER_PORT=587
+      - MAILER_USER=your-email@gmail.com
+      - MAILER_PASS=your-app-password
+      - CORS_ORIGIN=http://localhost:8080
+      - PORT=3000
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - app-network
+    restart: unless-stopped
+    volumes:
+      - uploads:/app/uploads
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Backend Development (uncomment for development)
+  # api-dev:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #     target: development
+  #   ports:
+  #     - "3001:3000"
+  #   container_name: gradient-able-api-dev
+  #   environment:
+  #     - NODE_ENV=development
+  #     - MONGODB_URI=mongodb://admin:password123@mongodb:27017/api?authSource=admin
+  #     - JWT_SECRET=dev-jwt-secret-key
+  #     - CORS_ORIGIN=http://localhost:4200
+  #   depends_on:
+  #     mongodb:
+  #       condition: service_healthy
+  #   networks:
+  #     - app-network
+  #   volumes:
+  #     - ./backend:/app
+  #     - /app/node_modules
+  #     - uploads:/app/uploads
+  #   profiles:
+  #     - dev
+
+  # MongoDB Database
+  mongodb:
+    image: mongo:7-jammy
+    ports:
+      - "27017:27017"
+    container_name: gradient-able-mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password123
+      - MONGO_INITDB_DATABASE=api
+    volumes:
+      - mongodb_data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # MongoDB Admin Interface (optional)
+  mongo-express:
+    image: mongo-express:1.0.2-20
+    ports:
+      - "8081:8081"
+    container_name: gradient-able-mongo-express
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password123
+      - ME_CONFIG_MONGODB_URL=mongodb://admin:password123@mongodb:27017/?authSource=admin
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin123
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # Nginx Reverse Proxy (optional - for production routing)
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    container_name: gradient-able-nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - frontend
+      - api
+    networks:
+      - app-network
+    restart: unless-stopped
+    profiles:
+      - production
+
+networks:
+  app-network:
+    driver: bridge
+    name: gradient-able-network
+
+volumes:
+  mongodb_data:
+    name: gradient-able-mongodb-data
+  uploads:
+    name: gradient-able-uploads

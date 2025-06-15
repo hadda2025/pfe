@@ -1,0 +1,59 @@
+<div class="update-form-container">
+  <h2>Mettre à jour les informations du stage</h2>
+
+  <form [formGroup]="stageForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="namesujet">Sujet</label>
+      <input id="namesujet" formControlName="namesujet" type="text" class="form-control" placeholder="Sujet" />
+    </div>
+
+    <div class="form-group">
+      <label for="entreprise">Entreprise</label>
+      <input id="entreprise" formControlName="entreprise" type="text" class="form-control" placeholder="Entreprise" />
+    </div>
+
+      <div class="form-group">
+      <label for="student">etudient1</label>
+    <select id="student1" formControlName="student1" class="form-control">
+  <option *ngFor="let student of students" [value]="student._id">
+    {{ student.firstName }} {{ student.lastName }}
+  </option>
+</select></div>
+
+<div class="form-group">
+      <label for="student">etudient2</label>
+    <select id="student2" formControlName="student2" class="form-control">
+  <option *ngFor="let student of students" [value]="student._id">
+    {{ student.firstName }} {{ student.lastName }}
+  </option>
+</select></div>
+
+    <div class="form-group">
+      <label for="teacher">Encadrant</label>
+      <select id="teacher" formControlName="teacher" class="form-control">
+        <option *ngFor="let teacher of teachers" [value]="teacher._id">
+          {{ teacher.firstName }} {{ teacher.lastName }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="encadrant_externe">Encadrant externe</label>
+      <input id="encadrant_externe" formControlName="encadrant_externe" type="text" class="form-control" placeholder="Encadrant externe" />
+    </div>
+
+    <div class="form-group">
+      <label for="DateD">Date-Debut</label>
+      <input id="DateD" formControlName="DateD" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="DateF">Date-fin</label>
+      <input id="DateF" formControlName="DateF" type="date" class="form-control" />
+    </div>
+
+    <button type="submit" [disabled]="stageForm.invalid" class="btn btn-primary">
+      Mettre à jour
+    </button>
+  </form>
+</div>

@@ -1,0 +1,27 @@
+<div class="update-date-container">
+  <h2>📝 Modifier Plage de Date</h2>
+
+  <form [formGroup]="plageDateForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="dateDebut">Date de début</label>
+      <input type="date" id="dateDebut" formControlName="dateDebut" />
+    </div>
+
+    <div class="form-group">
+      <label for="dateFin">Date de fin</label>
+      <input type="date" id="dateFin" formControlName="dateFin" />
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="plageDateForm.invalid">Mettre à jour</button>
+      <button type="button" (click)="router.navigate(['/component/liste-dates'])">Annuler</button>
+    </div>
+  </form>
+
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+</div>

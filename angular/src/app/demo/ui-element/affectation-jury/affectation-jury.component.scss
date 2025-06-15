@@ -1,0 +1,95 @@
+.planning-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Alerte */
+.alert-box {
+  padding: 1rem;
+  background-color: #ffefc5;
+  border-left: 5px solid #ffc107;
+  margin-bottom: 1.5rem;
+  border-radius: 6px;
+  color: #5c4700;
+}
+
+/* Champs de formulaire */
+.form-group {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.form-group select,
+.form-group input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.form-group select:disabled,
+.form-group input:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+}
+
+/* Champs réduits */
+.small-input {
+  max-width: 250px;
+  margin-bottom: 1rem;
+}
+
+.small-input input {
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  height: 30px;
+}
+
+/* Erreurs */
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+/* Bouton */
+.text-end {
+  text-align: right;
+  margin-top: 1.5rem;
+}
+
+button[type="submit"] {
+  background-color: #28a745; /* vert */
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #218838; /* vert foncé */
+}
+
+button[type="submit"]:disabled {
+  background-color: #94d3a2; /* vert pâle désactivé */
+  cursor: not-allowed;
+}

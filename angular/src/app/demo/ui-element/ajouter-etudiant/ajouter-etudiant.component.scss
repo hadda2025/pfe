@@ -1,0 +1,86 @@
+/* Formulaire global */
+form {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px !important;
+  font-size: 0.92rem; /* taille globale réduite */
+}
+
+/* Titre */
+h2 {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+}
+
+/* Labels */
+.form-label {
+  font-weight: 500;
+  color: #34495e;
+  font-size: 0.88rem;
+  margin-bottom: 4px;
+}
+
+/* Champs input */
+.form-control {
+  border-radius: 5px;
+  padding: 6px 10px;
+  font-size: 0.88rem;
+  height: auto;
+}
+
+/* Focus sur champ */
+.form-control:focus {
+  border-color: #5cb85c;
+  box-shadow: 0 0 0 0.15rem rgba(92, 184, 92, 0.25);
+}
+
+/* Messages d'erreurs */
+.text-danger small,
+.error {
+  color: #e74c3c;
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+
+/* Groupes personnalisés */
+.form-group {
+  margin-top: 10px;
+}
+
+/* Boutons */
+button.btn {
+  padding: 6px 14px;
+  font-weight: 500;
+  font-size: 0.88rem;
+  border-radius: 6px;
+  min-width: 100px;
+}
+
+button.btn-success {
+  background-color: #27ae60;
+  border-color: #27ae60;
+}
+
+button.btn-success:hover {
+  background-color: #219150;
+  border-color: #219150;
+}
+
+button.btn-secondary:hover {
+  background-color: #6c757d;
+  border-color: #5a6268;
+}
+
+/* Espacement responsive */
+@media (max-width: 768px) {
+  .row .col-md-6 {
+    margin-bottom: 0.75rem;
+  }
+
+  .text-end {
+    text-align: center !important;
+  }
+}

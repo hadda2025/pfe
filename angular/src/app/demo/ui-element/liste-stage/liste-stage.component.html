@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center mb-2 px-2">
+      <h4>📋 Liste des stages</h4>
+      <div class="form-group mb-0">
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="searchInput"
+          placeholder="Rechercher..."
+          [(ngModel)]="searchText"
+          style="min-width: 200px;"
+        />
+      </div>
+    </div>
+
+    <div class="table-responsive px-2 pb-2">
+      <table class="table table-sm table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Sujet</th>
+            <th>Entreprise</th>
+             <th>Étudiants</th>
+            <th>Encadrant interne</th>
+            <th>Encadrant externe</th>
+           
+            <th>Date-Début</th>
+            <th>Date-Fin</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stage of filteredStages; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ stage.namesujet }}</td>
+            <td>{{ stage.entreprise }}</td>
+
+            
+            <!-- Étudiants -->
+            <td>
+              <ng-container *ngIf="Array.isArray(stage.student)">
+                <div *ngFor="let etu of stage.student">
+                  {{ etu.firstName }} {{ etu.lastName }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!Array.isArray(stage.student)">
+                {{ stage.student?.firstName }} {{ stage.student?.lastName }}
+              </ng-container>
+            </td>
+
+            <!-- Encadrant interne -->
+            <td>
+              <ng-container *ngIf="stage.teacher?.firstName">
+                {{ stage.teacher.firstName }} {{ stage.teacher.lastName }}
+              </ng-container>
+              <ng-container *ngIf="!stage.teacher?.firstName">
+                {{ stage.teacher }}
+              </ng-container>
+            </td>
+
+            <!-- Encadrant externe -->
+            <td>
+              <ng-container *ngIf="stage.encadrant_externe?.firstName">
+                {{ stage.encadrant_externe.firstName }} {{ stage.encadrant_externe.lastName }}
+              </ng-container>
+              <ng-container *ngIf="!stage.encadrant_externe?.firstName">
+                {{ stage.encadrant_externe }}
+              </ng-container>
+            </td>
+
+
+            <td>{{ stage.DateD | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ stage.DateF | date: 'dd/MM/yyyy' }}</td>
+
+            <td>
+              <div class="btn-group btn-group-sm">
+                <button class="btn btn-primary"
+                        [routerLink]="['/component/update-stage', stage._id]">
+                  ✏️
+                </button>
+                <button class="btn btn-danger"
+                        (click)="deleteStage(stage._id)">
+                  🗑️
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Aucun stage trouvé -->
+    <div *ngIf="filteredStages.length === 0"
+         class="alert alert-info text-center">
+      Aucun stage trouvé.
+    </div>
+  </div>
+</div>

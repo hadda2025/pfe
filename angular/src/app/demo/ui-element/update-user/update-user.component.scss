@@ -1,0 +1,50 @@
+.update-client-container {
+    width: 50%;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  form div {
+    margin-bottom: 15px;
+  }
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  button {
+    padding: 10px;
+    background-color: #7800AD;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  button:disabled {
+    background-color: #ccc;
+  }
+
+
+
+
+
+
+
+
+

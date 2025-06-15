@@ -1,0 +1,122 @@
+<div class="page-container">
+  <div class="row">
+    <div class="col-12">
+    <h2>📝 Ajouter un Sujet</h2>
+    <form [formGroup]="stageForm" (ngSubmit)="onSubmit()" class="p-4" enctype="multipart/form-data">
+      <div class="row g-3">
+
+        <!-- Sujet -->
+        <div class="col-md-6">
+          <label for="sujet" class="form-label">Nom du sujet de fin d'études</label>
+          <input type="text" id="sujet" formControlName="namesujet" class="form-control" />
+          <div *ngIf="stageForm.get('namesujet')?.invalid && stageForm.get('namesujet')?.touched" class="text-danger">
+            <small *ngIf="stageForm.get('namesujet')?.hasError('required')">Le sujet est requis.</small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="entreprise" class="form-label">Entreprise</label>
+          <input
+            list="entreprises"
+            id="entreprise"
+            class="form-control"
+            formControlName="entreprise"
+            placeholder="Entrez ou sélectionnez une entreprise"
+          />
+          <datalist id="entreprises">
+            <option value="Telnet"></option>
+            <option value="Sagemcom"></option>
+            <option value="Vermeg"></option>
+            <option value="Wevioo"></option>
+            <option value="Sofrecom"></option>
+            <option value="Orange Tunisie"></option>
+            <option value="OneTech"></option>
+            <option value="ST2I"></option>
+            <option value="Inovsys"></option>
+            <option value="Ooredoo Tunisie"></option>
+          </datalist>
+        
+          <div *ngIf="stageForm.get('entreprise')?.invalid && stageForm.get('entreprise')?.touched" class="text-danger">
+            <small *ngIf="stageForm.get('entreprise')?.hasError('required')">
+              L'entreprise est requise.
+            </small>
+          </div>
+        </div>
+
+        <!-- Encadrant interne -->
+        <div class="col-md-6">
+          <label for="teacher" class="form-label">Encadrant interne</label>
+          <select id="teacher" class="form-select" formControlName="teacher">
+            <option value="">-- Sélectionnez un encadrant --</option>
+            <option *ngFor="let t of teachers" [value]="t._id">
+              {{ t.firstName }} {{ t.lastName }}
+            </option>
+          </select>
+          <div *ngIf="stageForm.get('teacher')?.invalid && stageForm.get('teacher')?.touched" class="text-danger">
+            <small *ngIf="stageForm.get('teacher')?.hasError('required')">L'encadrant est requis.</small>
+          </div>
+        </div>
+
+        <!-- Encadrant externe -->
+        <div class="col-md-6">
+          <label for="encadrant_externe" class="form-label">Encadrant externe</label>
+          <input type="text" id="encadrant_externe" formControlName="encadrant_externe" class="form-control" />
+        </div>
+
+       <!-- Étudiant 1 -->
+<div class="col-md-6">
+  <label for="student1">Étudiant 1</label>
+  <select id="student1" class="form-control" formControlName="student1">
+    <option [ngValue]="null">-- Sélectionnez un étudiant --</option>
+    <option *ngFor="let student of students" [ngValue]="student">
+      {{ student.firstName }} {{ student.lastName }}
+    </option>
+  </select>
+  <div *ngIf="stageForm.get('student1')?.invalid && stageForm.get('student1')?.touched" class="text-danger">
+    <small *ngIf="stageForm.get('student1')?.hasError('required')">L'étudiant 1 est requis.</small>
+  </div>
+</div>
+
+<!-- Étudiant 2 -->
+<div class="col-md-6">
+  <label for="student2">Étudiant 2</label>
+  <select id="student2" class="form-control" formControlName="student2">
+    <option [ngValue]="null">-- Sélectionnez un étudiant --</option>
+    <option *ngFor="let student of students" [ngValue]="student">
+      {{ student.firstName }} {{ student.lastName }}
+    </option>
+  </select>
+  <div *ngIf="stageForm.get('student2')?.invalid && stageForm.get('student2')?.touched" class="text-danger">
+    <small *ngIf="stageForm.get('student2')?.hasError('required')">L'étudiant 2 est requis.</small>
+  </div>
+</div>
+
+
+        <!-- Date de début -->
+        <div class="col-md-6">
+          <label for="DateD" class="form-label">Date de début</label>
+          <input type="date" id="DateD" formControlName="DateD" class="form-control" />
+          <div *ngIf="stageForm.get('DateD')?.invalid && stageForm.get('DateD')?.touched" class="text-danger">
+            <small *ngIf="stageForm.get('DateD')?.hasError('required')">La date de début est requise.</small>
+          </div>
+        </div>
+
+        <!-- Date de fin -->
+        <div class="col-md-6">
+          <label for="DateF" class="form-label">Date de fin</label>
+          <input type="date" id="DateF" formControlName="DateF" class="form-control" />
+          <div *ngIf="stageForm.get('DateF')?.invalid && stageForm.get('DateF')?.touched" class="text-danger">
+            <small *ngIf="stageForm.get('DateF')?.hasError('required')">La date de fin est requise.</small>
+          </div>
+        </div>
+
+        <!-- Boutons -->
+        <div class="col-12 text-end mt-4">
+          <button type="submit" class="btn btn-success me-2" [disabled]="stageForm.invalid">
+            Ajouter
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

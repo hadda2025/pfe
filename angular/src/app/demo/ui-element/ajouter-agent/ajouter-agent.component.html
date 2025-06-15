@@ -1,0 +1,88 @@
+<div class="page-container">
+  <div class="form-card">
+    <h4 class="form-title">🧑‍💼 Ajouter un Agent de saisie </h4>
+
+    <form [formGroup]="agentForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="firstName">Nom</label>
+          <input type="text" id="firstName" formControlName="firstName" />
+          <div class="error" *ngIf="agentForm.get('firstName')?.touched && agentForm.get('firstName')?.hasError('required')">
+            Le nom est obligatoire.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Prénom</label>
+          <input type="text" id="lastName" formControlName="lastName" />
+          <div class="error" *ngIf="agentForm.get('lastName')?.touched && agentForm.get('lastName')?.hasError('required')">
+            Le prénom est obligatoire.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email" />
+          <div class="error" *ngIf="agentForm.get('email')?.touched && agentForm.get('email')?.hasError('required')">
+            L'email est obligatoire.
+          </div>
+          <div class="error" *ngIf="agentForm.get('email')?.touched && agentForm.get('email')?.hasError('email')">
+            L'email n'est pas valide.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Téléphone</label>
+          <input type="text" id="phone" formControlName="phone" />
+          <div class="error" *ngIf="agentForm.get('phone')?.touched && agentForm.get('phone')?.hasError('required')">
+            Le numéro est obligatoire.
+          </div>
+          <div class="error" *ngIf="agentForm.get('phone')?.touched && agentForm.get('phone')?.hasError('pattern')">
+            Le numéro doit être composé de 8 chiffres.
+          </div>
+        </div>
+
+           <div class="col-md-6">
+            <label for="adress" class="form-label">Adresse</label>
+            <input type="text" id="adress" formControlName="adress" class="form-control" />
+            <div *ngIf="agentForm.get('adress')?.invalid && agentForm.get('adress')?.touched" class="text-danger">
+              <small *ngIf="agentForm.get('adress')?.hasError('required')">La adresse est requise.</small>
+            </div>
+          </div>
+
+        <div class="form-group">
+          <label for="cin">CIN</label>
+          <input type="text" id="cin" formControlName="cin" />
+          <div class="error" *ngIf="agentForm.get('cin')?.touched && agentForm.get('cin')?.hasError('required')">
+            Le CIN est obligatoire.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="role">Rôle</label>
+          <select id="role" formControlName="role">
+            <option value="">Sélectionner...</option>
+            <option value="admin">Administrateur</option>
+            <option value="agent">Agent de saisie</option>
+          </select>
+          <div class="error" *ngIf="agentForm.get('role')?.touched && agentForm.get('role')?.hasError('required')">
+            Le rôle est obligatoire.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" formControlName="password" />
+          <div class="error" *ngIf="agentForm.get('password')?.touched && agentForm.get('password')?.hasError('required')">
+            Le mot de passe est obligatoire.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <button type="submit" class="btn-add">Ajouter</button>
+        <button type="button" class="btn-cancel" (click)="onCancel()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>

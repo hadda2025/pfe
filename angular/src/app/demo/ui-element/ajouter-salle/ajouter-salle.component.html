@@ -1,0 +1,93 @@
+<div class="row">
+  <div class="col-12">
+    <h2 class="mb-4">🏫 Ajouter une Salle</h2>
+
+    <form [formGroup]="roomForm" (ngSubmit)="onSubmit()" class="p-4 bg-light shadow rounded">
+      <div class="row g-3">
+        <!-- Nom de la salle -->
+        <div class="col-md-6">
+          <label for="nom" class="form-label">
+            🏷️ Nom de la salle
+          </label>
+          <input
+            type="text"
+            id="nom"
+            formControlName="nom"
+            class="form-control"
+            [class.is-invalid]="roomForm.get('nom')?.invalid && roomForm.get('nom')?.touched"
+          />
+          <div *ngIf="roomForm.get('nom')?.invalid && roomForm.get('nom')?.touched" class="invalid-feedback">
+            Le nom est requis.
+          </div>
+        </div>
+
+        <!-- Capacité -->
+        <div class="col-md-6">
+          <label for="capacite" class="form-label">
+            👥 Capacité
+          </label>
+          <input
+            type="number"
+            id="capacite"
+            formControlName="capacite"
+            class="form-control"
+            [class.is-invalid]="roomForm.get('capacite')?.invalid && roomForm.get('capacite')?.touched"
+          />
+          <div *ngIf="roomForm.get('capacite')?.invalid && roomForm.get('capacite')?.touched" class="invalid-feedback">
+            <div *ngIf="roomForm.get('capacite')?.hasError('required')">La capacité est requise.</div>
+            <div *ngIf="roomForm.get('capacite')?.hasError('min')">Capacité minimale : 1.</div>
+          </div>
+        </div>
+
+        <!-- Disponibilité -->
+        <div class="col-md-6">
+          <label for="disponibilite" class="form-label">
+            ⏰ Disponibilité
+          </label>
+          <select
+            id="disponibilite"
+            formControlName="disponibilite"
+            class="form-select"
+            [class.is-invalid]="roomForm.get('disponibilite')?.invalid && roomForm.get('disponibilite')?.touched"
+          >
+            <option value="">-- Sélectionner --</option>
+            <option value="Matin (08:00 - 10:00)">Matin (08:00 - 10:00)</option>
+            <option value="Matin (10:00 - 12:00)">Matin (10:00 - 12:00)</option>
+            <option value="Après-midi (13:00 - 15:00)">Après-midi (13:00 - 15:00)</option>
+            <option value="Après-midi (15:00 - 17:00)">Après-midi (15:00 - 17:00)</option>
+            <option value="Journée complète">Journée complète</option>
+          </select>
+          <div *ngIf="roomForm.get('disponibilite')?.invalid && roomForm.get('disponibilite')?.touched" class="invalid-feedback">
+            La disponibilité est requise.
+          </div>
+        </div>
+
+        <!-- Bloc -->
+        <div class="col-md-6">
+          <label for="bloc" class="form-label">
+            🏢 Bloc / Étage
+          </label>
+          <input
+            type="text"
+            id="bloc"
+            formControlName="bloc"
+            class="form-control"
+            [class.is-invalid]="roomForm.get('bloc')?.invalid && roomForm.get('bloc')?.touched"
+          />
+          <div *ngIf="roomForm.get('bloc')?.invalid && roomForm.get('bloc')?.touched" class="invalid-feedback">
+            Le bloc est requis.
+          </div>
+        </div>
+
+        <!-- Boutons -->
+        <div class="col-12 text-end mt-4">
+          <button type="submit" class="btn btn-success me-2" [disabled]="roomForm.invalid">
+             Ajouter
+        
+          </button>
+          </div>
+          </div>
+          </form>
+          </div>
+          </div>
+          

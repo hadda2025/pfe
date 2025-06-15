@@ -1,0 +1,120 @@
+/* Conteneur principal */
+.container {
+  margin: 20px;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre principal */
+.container h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+/* Formulaire de recherche */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+form label {
+  font-weight: 500;
+  color: #34495e;
+  margin-bottom: 0.3rem;
+}
+
+form input[type="text"] {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+}
+
+/* Bouton principal */
+button {
+  background-color: #3498db;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Bouton vert pour l'export */
+button.export-green {
+  background-color: #27ae60;
+}
+
+button.export-green:hover {
+  background-color: #1e8449;
+}
+
+/* Tableau */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  margin-top: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+thead {
+  background-color: #3498db;
+  color: white;
+}
+
+thead th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+tbody tr:hover {
+  background-color: #f0f3f5;
+}
+
+ul {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+ul li {
+  margin-bottom: 2px;
+}
+
+/* Message d'erreur ou d'absence de résultat */
+.text-red-600 {
+  color: #e74c3c;
+}
+
+.text-gray-500 {
+  color: #7f8c8d;
+  font-style: italic;
+}

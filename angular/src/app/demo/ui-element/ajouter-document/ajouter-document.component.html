@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-12">
+    <h2>📄 Ajouter Document</h2>
+    <form [formGroup]="documentForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="p-4">
+      <div class="row g-3">
+
+        <!-- Nom du document -->
+        <div class="col-md-6">
+          <label for="name" class="form-label">Nom du document</label>
+          <input type="text" id="name" formControlName="name" class="form-control" />
+          <div *ngIf="documentForm.get('name')?.touched && documentForm.get('name')?.invalid" class="text-danger">
+            <small *ngIf="documentForm.get('name')?.hasError('required')">Le nom est requis.</small>
+          </div>
+        </div>
+
+        <!-- Type de document -->
+        <div class="col-md-6">
+          <label for="type" class="form-label">Type de document</label>
+          <select id="type" formControlName="type" class="form-select">
+            <option value="">Sélectionner...</option>
+            <option value="pdf">PDF</option>
+            <option value="doc">Word</option>
+            <option value="ppt">PowerPoint</option>
+            <option value="autre">Autre</option>
+          </select>
+          <div *ngIf="documentForm.get('type')?.touched && documentForm.get('type')?.invalid" class="text-danger">
+            <small *ngIf="documentForm.get('type')?.hasError('required')">Le type est requis.</small>
+          </div>
+        </div>
+
+        <!-- Fichier -->
+        <div class="col-md-6">
+          <label for="file" class="form-label">Fichier</label>
+          <input type="file" id="file" (change)="onFileSelected($event)" class="form-control" />
+          <div *ngIf="fileInvalid" class="text-danger">
+            <small>Le fichier est requis.</small>
+          </div>
+        </div>
+
+        <!-- Sujet de fin d'étude -->
+        <div class="col-md-6">
+          <label for="sujet" class="form-label">Sujet de fin d’étude</label>
+          <select id="sujet" formControlName="sujetfinetude" class="form-select">
+            <option value="">-- Choisir un sujet --</option>
+            <option *ngFor="let sujet of sujets" [value]="sujet._id">{{ sujet.namesujet }}</option>
+          </select>
+        </div>
+
+        <!-- Boutons -->
+        <div class="col-12 text-end mt-4">
+          <button type="submit" class="btn btn-success me-2" [disabled]="documentForm.invalid || !selectedFile">
+            Ajouter
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
