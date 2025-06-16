@@ -1,32 +1,46 @@
-# Multi-stage build for Angular application
-FROM node:20-alpine AS build
+# Use official Node.js slim image as base for building
+FROM node:20-alpine3.19 AS builder
 
 # Set working directory
 WORKDIR /app
 
+# Install global Angular CLI
+RUN npm install -g @angular/cli
+
 # Copy package files
 COPY package*.json ./
+COPY angular.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install dependencies with force
+RUN npm install --force
 
-# Copy source code
+# Copy source files
 COPY . .
 
-# Build the application
-RUN npm run build
+# Print dist folder contents before and after build for debugging
+RUN ls -la
 
-# Production stage
+# Build the Angular application with verbose output
+RUN npm run build-prod || (echo "Build failed" && ls -la dist && exit 1)
+
+# Print dist folder contents after build
+RUN ls -la dist
+
+# Production stage with Nginx
 FROM nginx:alpine
 
-# Copy built application from build stage
-COPY --from=build /app/dist/gradient-able-free-angular-admin-template /usr/share/nginx/html
+# Create directory structure
+RUN mkdir -p /usr/share/nginx/html/demos/admin-templates/gradient-able/angular/free
 
-# Copy custom nginx configuration (optional)
-COPY nginx.conf /etc/nginx/nginx.conf
+# Copy built artifacts 
+# Use wildcard to handle potential naming variations
+COPY --from=builder /app/dist*/*/ /usr/share/nginx/html/demos/admin-templates/gradient-able/angular/free
 
-# Expose port 80
+# Copy custom Nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port
 EXPOSE 80
 
-# Start nginx
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]

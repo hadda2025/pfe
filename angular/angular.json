@@ -30,6 +30,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/demos/admin-templates/gradient-able/angular/free/",
               "budgets": [
                 {
                   "type": "initial",

@@ -1,65 +1,48 @@
-# Use the official Node.js 18 Alpine image as base
-FROM node:18-alpine AS base
-
-# Install system dependencies needed for native modules and Puppeteer
-RUN apk add --no-cache \
-    chromium \
-    nss \
-    freetype \
-    freetype-dev \
-    harfbuzz \
-    ca-certificates \
-    ttf-freefont \
-    python3 \
-    make \
-    g++
-
-# Tell Puppeteer to skip installing Chromium. We'll be using the installed package.
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+# Use official Node.js slim image as base
+FROM node:20-alpine3.19 AS builder
 
 # Set working directory
 WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
+COPY .env .env
 
 # Install dependencies
-RUN npm ci --only=production && npm cache clean --force
+COPY node_modules ./node_modules
 
-# Development stage
-FROM base AS development
-RUN npm ci
+# Copy source files
 COPY . .
-EXPOSE 3000
-CMD ["npm", "run", "start:dev"]
 
-# Build stage
-FROM base AS build
-RUN npm ci
-COPY . .
+# Build the application
 RUN npm run build
 
 # Production stage
-FROM base AS production
-# Copy built application
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/node_modules ./node_modules
+FROM node:20-alpine3.19
 
-# Create non-root user for security
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nestjs -u 1001
+# Set working directory
+WORKDIR /app
 
-# Change ownership of the app directory
-RUN chown -R nestjs:nodejs /app
-USER nestjs
+# Create a non-root user for security
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+# Copy built artifacts from builder stage
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/.env ./.env
+
+# Change ownership to non-root user
+RUN chown -R appuser:appgroup /app
+
+# Switch to non-root user
+USER appuser
 
 # Expose port
 EXPOSE 3000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD node healthcheck.js
+# Set environment to production
+ENV NODE_ENV=production
 
-# Start the application
-CMD ["node", "dist/main"]
+# Start the server
+CMD ["npm", "run", "start:prod"]

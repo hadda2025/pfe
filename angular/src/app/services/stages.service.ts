@@ -33,27 +33,27 @@ export class SujetFinEtudeService {
   constructor(private http: HttpClient) {}
 
   // Créer un sujet
-  createSujet(sujet: SujetFinEtude): Observable<ApiResponse<SujetFinEtude>> {
-    return this.http.post<ApiResponse<SujetFinEtude>>(this.apiUrl, sujet);
+  createSujet(sujet: any): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(this.apiUrl, sujet);
   }
 
   // Récupérer tous les sujets
-  getAllSujets(): Observable<ApiResponse<any[]>> {
-    return this.http.get<ApiResponse<any[]>>(this.apiUrl);
+  getAllSujets(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiUrl);
   }
 
-   getAlllistSujets(): Observable<ApiResponse<any[]>> {
-  return this.http.get<ApiResponse<any[]>>(`${this.apiUrl}/all`);
+   getAlllistSujets(): Observable<ApiResponse<any>> {
+  return this.http.get<ApiResponse<any>>(`${this.apiUrl}/all`);
 }
 
   // Récupérer un sujet par ID
-  getSujetById(id: string): Observable<ApiResponse<SujetFinEtude>> {
-    return this.http.get<ApiResponse<SujetFinEtude>>(`${this.apiUrl}/${id}`);
+  getSujetById(id: string): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(`${this.apiUrl}/${id}`);
   }
 
   // Mettre à jour un sujet
-  updateSujet(id: string, sujet: any): Observable<ApiResponse<SujetFinEtude>> {
-    return this.http.patch<ApiResponse<SujetFinEtude>>(`${this.apiUrl}/${id}`, sujet);
+  updateSujet(id: string, sujet: any): Observable<ApiResponse<any>> {
+    return this.http.patch<ApiResponse<any>>(`${this.apiUrl}/${id}`, sujet);
   }
 
   // Supprimer un sujet
