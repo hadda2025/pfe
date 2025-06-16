@@ -6,12 +6,11 @@ WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-COPY .env .env
 
 # Install dependencies
 COPY node_modules ./node_modules
 
-# Copy source files
+# Copy source files and .env
 COPY . .
 
 # Build the application
@@ -30,7 +29,7 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/.env ./.env
+COPY --from=builder /app/.env* ./
 
 # Change ownership to non-root user
 RUN chown -R appuser:appgroup /app

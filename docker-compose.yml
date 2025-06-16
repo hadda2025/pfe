@@ -18,8 +18,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - MONGODB_URI=mongodb://mongodb:27017/mydatabase
-      - Access_TOKEN_SECRET=${ACCESS_TOKEN_SECRET:-khodmi}
+      - MONGODB_URI=mongodb://mongodb:27017/soutenance
+      - Access_TOKEN_SECRET=${Access_TOKEN_SECRET:-khodmi}
       - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET:-ahlem}
     depends_on:
       - mongodb
@@ -34,7 +34,9 @@ services:
       - mongodb_data:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     environment:
-      - MONGO_INITDB_DATABASE=mydatabase
+      - MONGODB_URI=mongodb://mongodb:27017/soutenance
+      - Access_TOKEN_SECRET=khodmi
+      - REFRESH_TOKEN_SECRET=ahlem
     networks:
       - app-network
   
