@@ -16,11 +16,19 @@ export class UsersService {
 
   ) { }
 
-  async create(createUserDto: CreateUserDto): Promise<IUser> {
-    const newUser = new this.userModel(createUserDto)
-    newUser.role = "Admin"
-    return await newUser.save()
+async create(createUserDto: CreateUserDto): Promise<IUser> {
+  // Vérifier s’il y a déjà un admin existant
+  const existingAdmin = await this.userModel.findOne({ role: 'Admin' });
+  if (existingAdmin) {
+    throw new Error('Un administrateur existe déjà. Création refusée.');
   }
+
+  // Créer le nouvel utilisateur avec le rôle Admin
+  const newUser = new this.userModel(createUserDto);
+  newUser.role = 'Admin';
+  return await newUser.save();
+}
+
 
   async createAgent(createUserDto: CreateUserDto): Promise<IUser> {
     const newUser = new this.userModel(createUserDto)

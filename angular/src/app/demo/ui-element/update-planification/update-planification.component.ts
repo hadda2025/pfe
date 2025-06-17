@@ -67,7 +67,7 @@ rapporteur:any;
 
     forkJoin([
      
-      this.sujetService.getAllSujets(),
+      this.sujetService.getAlllistSujets(),
       this.teachersService.getAllTeachers(),
       this.roomsService.getAllRooms(),
       this.sessionsService.getAllSessions(),

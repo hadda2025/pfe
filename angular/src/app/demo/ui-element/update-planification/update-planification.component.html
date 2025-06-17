@@ -4,29 +4,37 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <!-- Sujet -->
-    <div class="form-group inline-form-group">
-      <label><h5>Sujet de fin d'étude :</h5></label>
-      <p><strong>{{ subject.namesujet }}</strong></p>
-    </div>
+   <label>
+  <h5>
+    <span class="emoji">📚</span> Sujet de fin d'étude : 
+    <span class="subject-name">{{ subject.namesujet }}</span>
+  </h5>
+</label>
 
-    <!-- Étudiants -->
-    <div class="form-group inline-form-group">
-      <label for="etudiants"><h5>Étudiant(s) :</h5></label>
-      <p><strong>
-        <span *ngFor="let stud of subject.student; let last = last">
-          {{ stud.firstName }} {{ stud.lastName }}<span *ngIf="!last">, </span>
-        </span>
-      </strong></p>
-    </div>
+   <!-- Étudiants -->
+<h5>
+  <span class="emoji">🎓</span> Étudiant(s) :
+  <span class="value">
+    <span *ngFor="let stud of subject.student; let last = last">
+      {{ stud.firstName }} {{ stud.lastName }}<span *ngIf="!last">, </span>
+    </span>
+  </span>
+</h5>
 
-    <!-- Jury affiché -->
-    <div class="form-group" *ngIf="subject">
-      <h5> Jury Affecté :</h5>
-      <p><strong>Examinateur :</strong> {{examinateur.firstName }} {{ examinateur.lastName }}</p>
-      <p><strong>Président :</strong> {{president.firstName }} {{ president.lastName }}</p>
-      <p><strong>Rapporteur :</strong> {{ rapporteur.firstName }} {{ rapporteur.lastName }}</p>
-    </div>
-
+<!-- Jury -->
+<h5><span class="emoji">👩‍⚖️👩‍🎓🧑‍🎓</span> Jury Affecté :</h5>
+<p>
+  <strong>Examinateur :</strong>
+  <span class="value">{{ examinateur.firstName }} {{ examinateur.lastName }}</span>
+</p>
+<p>
+  <strong>Président :</strong>
+  <span class="value">{{ president.firstName }} {{ president.lastName }}</span>
+</p>
+<p>
+  <strong>Rapporteur :</strong>
+  <span class="value">{{ rapporteur.firstName }} {{ rapporteur.lastName }}</span>
+</p>
     <div class="planification-container" [formGroup]="form">
 
       <!-- Salle -->
