@@ -33,30 +33,30 @@ import { MailerModule } from '@nestjs-modules/mailer';
     }),
 
     // Mongoose Configuration with Dynamic Connection
-    // MongooseModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   useFactory: async (configService: ConfigService) => ({
-    //     uri: configService.get<string>('MONGODB_URI', 'mongodb://mongodb:27017/soutenance'),
-    //     dbName: 'soutenance',
-    //     useNewUrlParser: true,
-    //     useUnifiedTopology: true,
-    //     connectionFactory: (connection) => {
-    //       connection.on('connected', () => {
-    //         console.log('MongoDB connected successfully');
-    //       });
-    //       connection.on('error', (error) => {
-    //         console.error('MongoDB connection error:', error);
-    //       });
-    //       connection.on('disconnected', () => {
-    //         console.log('MongoDB disconnected');
-    //       });
-    //       return connection;
-    //     },
-    //   }),
-    //   inject: [ConfigService],
-    // }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGODB_URI', 'mongodb://mongodb:27017/soutenance'),
+        dbName: 'soutenance',
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        connectionFactory: (connection) => {
+          connection.on('connected', () => {
+            console.log('MongoDB connected successfully');
+          });
+          connection.on('error', (error) => {
+            console.error('MongoDB connection error:', error);
+          });
+          connection.on('disconnected', () => {
+            console.log('MongoDB disconnected');
+          });
+          return connection;
+        },
+      }),
+      inject: [ConfigService],
+    }),
 
-    MongooseModule.forRoot('mongodb://localhost:27017', { dbName: "soutenance" }),
+    // MongooseModule.forRoot('mongodb://localhost:27017', { dbName: "soutenance" }),
 
     // Mailer Configuration
     MailerModule.forRootAsync({
