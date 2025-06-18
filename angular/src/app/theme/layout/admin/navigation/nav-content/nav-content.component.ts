@@ -9,6 +9,7 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { NavCollapseComponent } from './nav-collapse/nav-collapse.component';
 import { NavGroupComponent } from './nav-group/nav-group.component';
 import { NavItemComponent } from './nav-item/nav-item.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-nav-content',
@@ -17,12 +18,18 @@ import { NavItemComponent } from './nav-item/nav-item.component';
   styleUrls: ['./nav-content.component.scss']
 })
 export class NavContentComponent implements OnInit {
+  public navigationItems: NavigationItem[] = [];
+  private userRole: string = '';
   private location = inject(Location);
   private locationStrategy = inject(LocationStrategy);
 
   // version
   title = 'Demo application for version numbering';
   currentApplicationVersion = environment.appVersion;
+
+
+  
+
 
   // public pops
   navigations: NavigationItem[];
@@ -31,13 +38,15 @@ export class NavContentComponent implements OnInit {
 
   NavMobCollapse = output();
   // constructor
-  constructor() {
+  constructor(private authService: AuthService) {
     this.windowWidth = window.innerWidth;
     this.navigations = NavigationItems;
   }
 
   // life cycle event
   ngOnInit() {
+     this.userRole = this.authService.getCurrentUserRole(); // ex: 'admin'
+    this.navigationItems = this.filterItemsByRole(NavigationItems);
     if (this.windowWidth < 992) {
       document.querySelector('.pcoded-navbar')?.classList.add('menupos-static');
     }
@@ -75,4 +84,18 @@ export class NavContentComponent implements OnInit {
       }
     }
   }
+    private filterItemsByRole(items: NavigationItem[]): NavigationItem[] {
+    return items
+      .map(item => {
+        if (item.children) {
+          const children = this.filterItemsByRole(item.children);
+          return { ...item, children };
+        }
+        return item;
+      })
+      .filter(item => {
+        return !item.roles || item.roles.includes(this.userRole);
+      });
+  }
 }
+

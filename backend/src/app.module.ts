@@ -56,7 +56,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
       inject: [ConfigService],
     }),
 
-    // MongooseModule.forRoot('mongodb://localhost:27017', { dbName: "soutenance" }),
+  
+  
+    //MongooseModule.forRoot('mongodb://localhost:27017', { dbName: "soutenance" }),
 
     // Mailer Configuration
     MailerModule.forRootAsync({

@@ -16,6 +16,7 @@ export interface NavigationItem {
     type?: string;
   };
   children?: NavigationItem[];
+   roles?: string[]; // ← Champ ajouté ici
 }
 
 export const NavigationItems: NavigationItem[] = [
@@ -52,7 +53,8 @@ export const NavigationItems: NavigationItem[] = [
             id: 'ajouter-agent',
             title: 'Ajouter Agent',
             type: 'item',
-            url: '/component/ajouter-agent'
+            url: '/component/ajouter-agent',
+              roles: ['admin']
           },
         
           {
@@ -91,7 +93,8 @@ export const NavigationItems: NavigationItem[] = [
             id: 'liste-etudiant',
             title: 'Liste Étudiants',
             type: 'item',
-            url: '/component/liste-etudiant'
+            url: '/component/liste-etudiant',
+             roles: ['admin', 'agent']
           }
         ]
       }

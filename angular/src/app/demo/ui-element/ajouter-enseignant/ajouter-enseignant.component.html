@@ -42,18 +42,30 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="classeDepartement">Departement</label>
-          <select id="classeDepartement" formControlName="classeDepartement">
-            <option value="Réseaux">Informatique</option>
-            <option value="informatique">Informatique</option>
-            <option value="electronique">Électronique</option>
-            <option value="mécanique">Mécanique</option>
-          </select>
-          <div class="error" *ngIf="userForm.get('classeDepartement')?.touched && userForm.get('classeDepartement')?.hasError('required')">
-            Le département est obligatoire.
-          </div>
-        </div>
+             <div class="form-group">
+  <label for="classeDepartement">Département</label>
+  <select id="classeDepartement" class="form-control" formControlName="classeDepartement" (change)="onDepartementChange($event)">
+    <option value="">-- Sélectionner un département --</option>
+    <option value="informatique">Informatique</option>
+    <option value="electronique">Électronique</option>
+    <option value="mecanique">Mécanique</option>
+    <option value="autre">Autre</option>
+  </select>
+
+  <!-- Message d’erreur si non sélectionné -->
+  <div class="error" *ngIf="userForm.get('classeDepartement')?.touched && userForm.get('classeDepartement')?.hasError('required')">
+    Le département est obligatoire.
+  </div>
+</div>
+
+<!-- Champ texte visible seulement si "Autre" est sélectionné -->
+<div class="form-group mt-2" *ngIf="showAutreDepartementInput ">
+  <label for="autreDepartement">Veuillez préciser le département</label>
+  <input id="autreDepartement" type="text" class="form-control" formControlName="autreDepartement" placeholder="Nom du département">
+  <div class="error" *ngIf="userForm.get('autreDepartement')?.touched && userForm.get('autreDepartement')?.hasError('required')">
+    Ce champ est requis si vous avez choisi "Autre".
+  </div>
+</div>
 
       <div class="col-md-6">
             <label for="adress" class="form-label">Adresse</label>

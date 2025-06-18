@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RoleGuard } from 'src/app/theme/layout/admin/navigation/role-guard/role-guard.component';
 
 const routes: Routes = [
   {
@@ -9,6 +10,8 @@ const routes: Routes = [
       
       {
         path: 'ajouter-agent',
+   canActivate: [RoleGuard],
+  data: { roles: ['admin'] },
         loadComponent: () => import('./ajouter-agent/ajouter-agent.component')
       },
       {
@@ -50,6 +53,8 @@ const routes: Routes = [
       },
       {
         path: 'liste-etudiant',
+         canActivate: [RoleGuard],
+  data: { roles: ['Admin', 'Agent'] },
         loadComponent: () => import('./liste-etudiant/listetudiant.component')
       },
       {
@@ -66,6 +71,8 @@ const routes: Routes = [
       },
       {
         path: 'liste-enseignant',
+         canActivate: [RoleGuard],
+  data: { roles: ['Admin', 'Agent'] },
         loadComponent: () => import('./liste-enseignant/liste-enseignant.component')
       },
       {
@@ -82,6 +89,8 @@ const routes: Routes = [
     
       {
         path: 'liste-stage',
+         canActivate: [RoleGuard],
+  data: { roles: ['Admin'] },
         loadComponent: () => import('./liste-stage/liste-stage.component')
       },
 
@@ -97,6 +106,8 @@ const routes: Routes = [
       },
       {
         path: 'liste-sessions',
+         canActivate: [RoleGuard],
+  data: { roles: ['Admin', 'Agent'] },
         loadComponent: () => import('./liste-session/liste-session.component')
       },
 
@@ -114,6 +125,8 @@ const routes: Routes = [
       },
       {
         path: 'liste-salles',
+         canActivate: [RoleGuard],
+  data: { roles: ['Admin', 'Agent'] },
         loadComponent: () => import('./liste-salle/liste-salle.component')
       },
 
@@ -134,6 +147,8 @@ const routes: Routes = [
       },
       {
         path: 'liste-dates',
+         canActivate: [RoleGuard],
+  data: { roles: ['Admin', 'Agent'] },
         loadComponent: () => import('./liste-dates/liste-dates.component')
       },
         {
@@ -150,6 +165,8 @@ const routes: Routes = [
       },
       {
         path: 'liste-seance',
+         canActivate: [RoleGuard],
+  data: { roles: ['Admin', 'Agent'] },
         loadComponent: () => import('./liste-seance/liste-seance.component')
       },
         {
@@ -178,6 +195,8 @@ const routes: Routes = [
       },
       {
         path: 'liste-soutenances',
+         canActivate: [RoleGuard],
+  data: { roles: ['Admin'] },
         loadComponent: () => import('./liste-soutenance/liste-soutenance.component')
       },
  {
@@ -194,6 +213,8 @@ const routes: Routes = [
 
       {
         path: 'liste-Affectation-jury',
+         canActivate: [RoleGuard],
+  data: { roles: ['Admin'] },
         loadComponent: () => import('./liste-affectation-jury/liste-affectation-jury.component')
       },
 

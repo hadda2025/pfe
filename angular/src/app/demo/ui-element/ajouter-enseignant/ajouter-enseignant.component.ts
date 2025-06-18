@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 export default class AjouterEnseignantComponent implements OnInit {
 
   userForm!: FormGroup;
-
+  showAutreDepartementInput = false;
   constructor(
     private fb: FormBuilder,
     private teachersService: TeachersService,
@@ -28,12 +28,33 @@ export default class AjouterEnseignantComponent implements OnInit {
       prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       telephone: ['', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]], // Tunisian phone number format
-      classeDepartement: ['', Validators.required],
+       classeDepartement: ['', Validators.required],
+      autreDepartement: [''],
       adress: ['', Validators.required],
       
       dateCreation: ['', Validators.required]
      
     });
+  }
+  onDepartementChange(event: any): void {
+    const selected = event.target.value;
+    this.showAutreDepartementInput = selected === 'autre';
+
+    if (this.showAutreDepartementInput ) {
+      this.userForm.get('autreDepartement')?.setValidators(Validators.required);
+    } else {
+      this.userForm.get('autreDepartement')?.clearValidators();
+      this.userForm.get('autreDepartement')?.setValue('');
+    }
+
+    this.userForm.get('autreDepartement')?.updateValueAndValidity();
+  }
+
+  getDepartementFinal(): string {
+    const selected = this.userForm.get('classeDepartement')?.value;
+    return selected === 'autre'
+      ? this.userForm.get('autreDepartement')?.value
+      : selected;
   }
 
   onSubmit(): void {
@@ -47,7 +68,7 @@ export default class AjouterEnseignantComponent implements OnInit {
         role: "Teacher", // Always 'Teacher' based on the current form
         email: formValue.email,
         phone: formValue.telephone,
-        classeDepartement: formValue.classeDepartement,
+         classeDepartement: this.getDepartementFinal(), // Ajout du champ correct ici
         password: "zzzzzzzzzzzzzzzzz", // peut être généré aléatoirement plus tard
         adress: formValue.adress,
        

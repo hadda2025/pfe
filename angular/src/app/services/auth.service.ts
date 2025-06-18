@@ -32,5 +32,14 @@ export class AuthService {
    // return this.http.post(`${this.apiUrl}/updatepassword/${id}`, payload);
  // }
   
-
+ getCurrentUserRole(): string {
+    const userStr = localStorage.getItem('user');
+    if (!userStr) return ''; // ou un rôle par défaut
+    try {
+      const user = JSON.parse(userStr);
+      return user.role || '';
+    } catch {
+      return '';
+    }
+  }
 }
