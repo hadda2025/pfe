@@ -17,24 +17,19 @@ RUN npm install --force
 # Copy source files
 COPY . .
 
-# Print dist folder contents before and after build for debugging
-RUN ls -la
+# Build the Angular application for development (without baseHref)
+RUN ng build --configuration=development --base-href=/ || (echo "Build failed" && exit 1)
 
-# Build the Angular application with verbose output
-RUN npm run build-prod || (echo "Build failed" && ls -la dist && exit 1)
-
-# Print dist folder contents after build
-RUN ls -la dist
+# Debug: Print dist folder contents after build
+RUN ls -la dist/
+RUN find dist/ -type f -name "*.png" -o -name "*.jpg" -o -name "*.svg" | head -10
 
 # Production stage with Nginx
 FROM nginx:alpine
 
-# Create directory structure
-RUN mkdir -p /usr/share/nginx/html/demos/admin-templates/gradient-able/angular/free
-
-# Copy built artifacts 
-# Use wildcard to handle potential naming variations
-COPY --from=builder /app/dist*/*/ /usr/share/nginx/html/demos/admin-templates/gradient-able/angular/free
+# Copy built artifacts to nginx html directory
+# This copies everything from the dist folder to the root of nginx
+COPY --from=builder /app/dist/ /usr/share/nginx/html/
 
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
