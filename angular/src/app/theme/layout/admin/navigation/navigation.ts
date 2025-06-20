@@ -42,26 +42,29 @@ export const NavigationItems: NavigationItem[] = [
     title: '',
     type: 'group',
     icon: 'icon-group',
+    roles: ['Admin'],
     children: [
       {
         id: 'basic',
         title: 'Gestion-Agent',
         type: 'collapse',
         icon: 'feather icon-briefcase',
+        roles: ['Admin'],
         children: [
           {
             id: 'ajouter-agent',
             title: 'Ajouter Agent',
             type: 'item',
             url: '/component/ajouter-agent',
-              roles: ['admin']
+              roles: ['Admin']
           },
         
           {
             id: 'liste-agent',
             title: 'Liste Agents',
             type: 'item',
-            url: '/component/liste-agent'
+            url: '/component/liste-agent',
+              roles: ['Admin'],
           }
         ]
       }
@@ -94,7 +97,7 @@ export const NavigationItems: NavigationItem[] = [
             title: 'Liste Étudiants',
             type: 'item',
             url: '/component/liste-etudiant',
-             roles: ['admin', 'agent']
+            
           }
         ]
       }

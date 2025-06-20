@@ -1,5 +1,5 @@
 // angular import
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 // bootstrap import
@@ -28,11 +28,13 @@ import { Router, RouterLink } from '@angular/router';
     ])
   ]
 })
-export class NavRightComponent {
+export  class NavRightComponent implements OnInit {
+  userConnected = false;
   // public props
   visibleUserList: boolean;
   chatMessage: boolean;
   friendId!: number;
+
 
   // constructor
   constructor( private router:Router) {
@@ -40,8 +42,15 @@ export class NavRightComponent {
     this.chatMessage = false;
    
   }
+  ngOnInit(): void {
+  
+      const user = localStorage.getItem('user');
+  this.userConnected = !!user;
+  }
 onLogin() {
   this.router.navigate(['/auth/signin']); // ou tout autre logique de connexion
+    this.userConnected = true;
+  
 }
   // public method
   // eslint-disable-next-line
@@ -49,5 +58,13 @@ onLogin() {
     this.friendId = friendID;
     this.chatMessage = !this.chatMessage;
   }
-  logout(){ localStorage.removeItem('user')}
+  logout(){ 
+    localStorage.removeItem('user'),
+      this.router.navigate(['/auth/signin']); // ou tout autre logique de connexion
+    console.log('logout')
+ 
+  this.userConnected = false;
+
+  }
+ 
 }

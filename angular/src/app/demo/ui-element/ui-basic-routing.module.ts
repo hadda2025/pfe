@@ -11,7 +11,7 @@ const routes: Routes = [
       {
         path: 'ajouter-agent',
    canActivate: [RoleGuard],
-  data: { roles: ['admin'] },
+  data: { roles: ['Admin'] },
         loadComponent: () => import('./ajouter-agent/ajouter-agent.component')
       },
       {
@@ -214,7 +214,7 @@ const routes: Routes = [
       {
         path: 'liste-Affectation-jury',
          canActivate: [RoleGuard],
-  data: { roles: ['Admin'] },
+  data: { roles: ['Admin', 'Agent'] },
         loadComponent: () => import('./liste-affectation-jury/liste-affectation-jury.component')
       },
 

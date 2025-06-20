@@ -1,7 +1,6 @@
 // angular import
 import { Component, OnInit, inject, output } from '@angular/core';
 import { Location, LocationStrategy } from '@angular/common';
-
 // project import
 import { environment } from 'src/environments/environment';
 import { NavigationItem, NavigationItems } from '../navigation';
@@ -22,38 +21,32 @@ export class NavContentComponent implements OnInit {
   private userRole: string = '';
   private location = inject(Location);
   private locationStrategy = inject(LocationStrategy);
-
+  
   // version
   title = 'Demo application for version numbering';
   currentApplicationVersion = environment.appVersion;
-
-
   
-
-
-  // public pops
-  navigations: NavigationItem[];
+  // public props
   wrapperWidth!: number;
   windowWidth: number;
-
   NavMobCollapse = output();
+
   // constructor
   constructor(private authService: AuthService) {
     this.windowWidth = window.innerWidth;
-    this.navigations = NavigationItems;
   }
 
   // life cycle event
   ngOnInit() {
-     this.userRole = this.authService.getCurrentUserRole(); // ex: 'admin'
+    this.userRole = this.authService.getCurrentUserRole(); // ex: 'admin'
     this.navigationItems = this.filterItemsByRole(NavigationItems);
+    
     if (this.windowWidth < 992) {
       document.querySelector('.pcoded-navbar')?.classList.add('menupos-static');
     }
   }
 
   // public method
-
   navMob() {
     if (this.windowWidth < 992 && document.querySelector('app-navigation.pcoded-navbar')?.classList.contains('mob-open')) {
       this.NavMobCollapse.emit();
@@ -84,18 +77,41 @@ export class NavContentComponent implements OnInit {
       }
     }
   }
-    private filterItemsByRole(items: NavigationItem[]): NavigationItem[] {
+
+  private filterItemsByRole(items: NavigationItem[]): NavigationItem[] {
     return items
       .map(item => {
-        if (item.children) {
-          const children = this.filterItemsByRole(item.children);
-          return { ...item, children };
+        // If item has children, recursively filter them
+        if (item.children && item.children.length > 0) {
+          const filteredChildren = this.filterItemsByRole(item.children);
+          return { ...item, children: filteredChildren };
         }
         return item;
       })
       .filter(item => {
-        return !item.roles || item.roles.includes(this.userRole);
+        // If item has children, only show it if it has at least one visible child
+        if (item.children && item.children.length > 0) {
+          return item.children.length > 0;
+        }
+        
+        // For leaf items, check role permissions
+        // If no roles specified, item is visible to all users
+        if (!item.roles || item.roles.length === 0) {
+          return true;
+        }
+        
+        // Check if user's role is in the allowed roles
+        return item.roles.includes(this.userRole);
       });
   }
-}
 
+  // Helper method to check if user has specific role (optional utility)
+  hasRole(role: string): boolean {
+    return this.userRole === role;
+  }
+
+  // Helper method to check if user has any of the specified roles (optional utility)
+  hasAnyRole(roles: string[]): boolean {
+    return roles.includes(this.userRole);
+  }
+}
