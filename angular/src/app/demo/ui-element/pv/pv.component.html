@@ -1,134 +1,135 @@
-
-
 <div *ngFor="let et of etudiants; let i = index">
   <div>
-  <div #pvContent class="pv-container">
+    <div #pvContent class="pv-container">
+<div class="content">
+
+
+      <div class="header">
+
+        <img src="assets/images/logo.png" alt="Logo ISET" class="logo"/>
+        <div class="head">
+          <h3>Ministère de l'Enseignement Supérieur, de la Recherche Scientifique</h3>
+          <p>Direction Générale des Études Technologiques</p>
+          <p>Institut Supérieur des Études Technologiques de Sousse</p>
+          <h2>Procès-Verbal</h2>
+          <h3>Stage de Fin d’études</h3>
+          <p>Année Universitaire : ....................</p>
+        </div>
+      </div>
+      <div class="etudiant-info">
+        <p><strong>Étudiant(e)</strong> : {{ et.firstName }} {{ et.lastName }}</p>
+        <p><strong>Parcours :</strong> {{ parcours }}</p>
+        <p><strong>Département :</strong> {{ classeDepartement }}</p>
+        <p><strong>Intitulé du sujet de SFE</strong> : {{ sujet.namesujet }}</p>
 
 
 
-    <div class="header">
-
-      <img src="assets/images/logo.png" alt="Logo ISET" class="logo" />
-      <h3>Ministère de l'Enseignement Supérieur, de la Recherche Scientifique</h3>
-      <p>Direction Générale des Études Technologiques</p>
-      <p>Institut Supérieur des Études Technologiques de Sousse</p>
-      <h2>Procès-Verbal</h2>
-      <h3>Stage de Fin d’études</h3>
-      <p>Année Universitaire : <span class="underline">....................</span></p>
-    </div>
-  
-    <div class="etudiant-info" >
-      <p><strong>Étudiant(e)</strong> : {{ et.firstName }} {{ et.lastName }}</p>
-     <p><strong>Parcours :</strong> {{ parcours }}</p>
-<p><strong>Département :</strong> {{ classeDepartement }}</p>
-      <p><strong>Intitulé du sujet de SFE</strong> : {{ sujet.namesujet }}</p>
-      
- 
-
-    <div *ngIf="seance">
-  <p><strong>Date de soutenance :</strong> {{ plage.dateDebut | date: 'dd/MM/yyyy' }}</p>
-  <p><strong>Heure :</strong> de {{ seance.heureDebut }} à {{ seance.heureFin }}</p>
-</div>
+        <div *ngIf="seance">
+          <p><strong>Date de soutenance :</strong> {{ plage.dateDebut | date: 'dd/MM/yyyy' }}</p>
+          <p><strong>Heure :</strong> de {{ seance.heureDebut }} à {{ seance.heureFin }}</p>
+        </div>
         <div style="margin-bottom: 10px;">
           <div style="border: 2px dashed black; display: inline-block; padding: 5px; margin-bottom: 5px;">
-            <strong>Note attribuée :</strong> ____ /20 
+            <strong>Note attribuée :</strong> ____ /20
           </div>
         </div>
-        
+
         <div style="border: 1px solid black; padding: 5px;">
           <strong>Décision du Jury* :</strong>
           <hr style="border: none; border-top: 1px dotted black; margin-top: 5px;" />
         </div>
-    
-        
 
+
+
+
+      </div>
+
+
+
+      <div class="jury-signatures">
+        <h4>Signatures</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom et Prénom</th>
+              <th>Jury</th>
+              <th>Signature</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ president.firstName }} {{ president.lastName }}</td>
+              <td>Président</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>{{ rapporteur.firstName }} {{ rapporteur.lastName }}</td>
+              <td>Rapporteur</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>{{ examinateur.firstName }} {{ examinateur.lastName }}</td>
+              <td>Encadrant</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>{{ sujet.encadrant_externe }}</td>
+              <td>Encadrant</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="observations">
+        <p>
+          - La décision à prononcer est exclusivement l'une des deux suivantes : SUCCÈS ou ÉCHEC<br />
+          - La décision "SUCCÈS" est accordée si la note attribuée est supérieure ou égale à 10/20<br />
+          - La décision "ÉCHEC" est accordée si la note est inférieure à 10/20<br />
+          - En cas d’échec, veuillez cocher les causes :
+        </p>
+
+        <ul class="list">
+          <li> Travail réalisé insuffisant</li>
+          <li> Rapport très mal rédigé</li>
+          <li> Soutenance très mal réalisée ou absence</li>
+          <li> Autres (à préciser en joignant un rapport annexe)</li>
+        </ul>
+
+        <p>........................................................................................................</p>
+        <p>........................................................................................................</p>
+        <p>........................................................................................................</p>
+      </div>
+    </div>
+    </div>
+    <hr style="border: none; border-top: 1px solid #3f51b5; margin: 10px auto; width: 60%;" />
+
+    <div id="pv-footer"
+      style="width: 60%; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; font-size: 12px; color: #333; text-align: center; gap: 10px; padding: 4px 10px;">
+      <!-- Adresse arabe -->
+      <span>4023 سوسة الرياض - ص ب 135</span>
+
+      <!-- Adresse française -->
+      <span> - B.P. 135 - 4023 Sousse Erriadh</span>
+
+      <!-- Téléphone -->
+      <span>📞 : (216) 73 30 79 60 / 61</span>
+
+      <!-- Fax -->
+      <span>📠 : (216) 73 30 79 63 الفاكس</span>
+
+      <!-- Email -->
+      <span>✉️ admin&#64;isetso.rnu.tn</span>
+
+      <!-- Site Facebook -->
+      <span>
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/facebook.svg" alt="Facebook"
+          style="width: 14px; vertical-align: middle; margin-right: 3px;" />
+        <a href="https://www.facebook.com/Isetso2021" target="_blank"
+          style="text-decoration: none; color: inherit;">www.facebook.com/Isetso2021</a>
+      </span>
 
     </div>
-
-
-  
-    <div class="jury-signatures">
-      <h4>Signatures</h4>
-      <table>
-        <thead>
-          <tr>
-            <th>Nom et Prénom</th>
-            <th>Jury</th>
-            <th>Signature</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{ president.firstName }} {{ president.lastName }}</td>
-            <td>Président</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>{{ rapporteur.firstName }} {{ rapporteur.lastName }}</td>
-            <td>Rapporteur</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>{{ examinateur.firstName }} {{ examinateur.lastName }}</td>
-            <td>Encadrant</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>{{ sujet.encadrant_externe }}</td>
-            <td>Encadrant</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  
-    <div class="observations">
-      <p>
-        - La décision à prononcer est exclusivement l'une des deux suivantes : SUCCÈS ou ÉCHEC<br />
-        - La décision "SUCCÈS" est accordée si la note attribuée est supérieure ou égale à 10/20<br />
-        - La décision "ÉCHEC" est accordée si la note est inférieure à 10/20<br />
-        - En cas d’échec, veuillez cocher les causes :
-      </p>
-  
-      <ul>
-        <li> Travail réalisé insuffisant</li>
-        <li> Rapport très mal rédigé</li>
-        <li> Soutenance très mal réalisée ou absence</li>
-        <li> Autres (à préciser en joignant un rapport annexe)</li>
-      </ul>
-  
-      <p>........................................................................................................</p>
-      <p>........................................................................................................</p>
-      <p>........................................................................................................</p>
-    </div>
-  </div>
- <hr style="border: none; border-top: 1px solid #3f51b5; margin: 10px auto; width: 50%;" />
-
-  <div id="pv-footer" style="width: 60%; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; font-size: 12px; color: #333; text-align: center; gap: 10px; padding: 4px 10px;">
-    <!-- Adresse arabe -->
-    <span>4023 سوسة الرياض - ص ب 135</span>
-  
-    <!-- Adresse française -->
-    <span> - B.P. 135 - 4023 Sousse Erriadh</span>
-  
-    <!-- Téléphone -->
-    <span>📞 : (216) 73 30 79 60 / 61</span>
-  
-    <!-- Fax -->
-    <span>📠 : (216) 73 30 79 63 الفاكس</span>
-  
-    <!-- Email -->
-    <span>✉️ admin&#64;isetso.rnu.tn</span>
-  
-    <!-- Site Facebook -->
-    <span>
-      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/facebook.svg" alt="Facebook" style="width: 14px; vertical-align: middle; margin-right: 3px;" />
-      <a href="https://www.facebook.com/Isetso2021" target="_blank" style="text-decoration: none; color: inherit;">www.facebook.com/Isetso2021</a>
-    </span>
-  
-  </div>
   </div>
   <button (click)="printSection(i)">🖨️ Imprimer</button>
-  </div>
-  
-  
+</div>

@@ -104,32 +104,85 @@ export default class PvComponent implements OnInit {
     if (!this.soutenance?.note) return '';
     return this.soutenance.note >= 10 ? 'SUCCÈS' : 'ÉCHEC';
   }
-printSection(index: number) {
+
+
+  printSection(index: number) {
   const section = this.pvContentRefs.get(index);
   const footer = document.getElementById('pv-footer');
 
   if (section && footer) {
-    const printContent = section.nativeElement.innerHTML;
+    let printContent = section.nativeElement.innerHTML;
     const footerContent = footer.innerHTML;
+
+    // ✅ Corriger le chemin du logo vers une URL absolue
+    printContent = printContent.replace(
+      /src="assets\/images\/logo.png"/g,
+      `src="${window.location.origin}/assets/images/logo.png"`
+    );
 
     const WindowPrt = window.open('', '', 'width=900,height=1000');
     if (WindowPrt) {
       WindowPrt.document.write(`
         <html>
           <head>
-            <title>Procès-Verbal</title>
+           
             <style>
               * {
                 box-sizing: border-box;
               }
               body {
-                font-family: Arial, sans-serif;
+                font-family: 'Open Sans';
                 font-size: 13px;
                 padding: 15px;
                 margin: 0;
               }
+               .header{
+               display:flex;
+              
+ 
+            justify-content: space-between;
+            align-items: center;
+ 
+               } 
+            .head{
+           text-align: center;
+
+
+             }
+           
+          .content{
+            border: 2px solid black;
+            margin: 10px;
+            padding: 10px;
+          }
+            
+ul {
+  list-style-type: none; /* Supprimer les puces natives */
+  padding-left: 0;
+}
+
+ul li::before {
+  content: "☐ "; /* Carré vide (Unicode U+2610) */
+  font-weight: bold;
+  margin-right: 6px;
+}
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               .logo {
-                width: 100px;
+                width: 200px;
                 margin-bottom: 10px;
               }
               h2 {
@@ -142,6 +195,7 @@ printSection(index: number) {
               }
               p {
                 margin: 4px 0;
+               
               }
               table {
                 width: 100%;
@@ -181,7 +235,7 @@ printSection(index: number) {
                 border: none;
                 border-top: 1px solid #3f51b5;
                 margin: 12px auto;
-                width: 50%;
+                width: 80%;
               }
               @media print {
                 button {
@@ -201,9 +255,15 @@ printSection(index: number) {
       `);
       WindowPrt.document.close();
       WindowPrt.focus();
-      WindowPrt.print();
-      WindowPrt.close();
+
+      // ⏳ Attendre un petit moment avant d'imprimer pour laisser le logo se charger
+      setTimeout(() => {
+        WindowPrt.print();
+        WindowPrt.close();
+      }, 500);
     }
   }
 }
+
 }
+

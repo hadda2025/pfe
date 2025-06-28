@@ -13,24 +13,26 @@
   }
   
   .logo {
-    width: 100px;
+    width: 150px;
     float: left;
   }
   
   .header h2 {
     font-size: 22px;
     margin: 10px 0;
-    text-decoration: underline;
+    font-weight: bold;
   }
   
   .header h3 {
     font-size: 18px;
     margin: 5px 0;
+    font-weight: bold;
   }
   
   .header p {
     font-size: 14px;
     margin: 2px 0;
+    font-weight: bold;
   }
   
   .etudiant-info, .decision, .observations {
@@ -107,4 +109,10 @@
     border-top: 1px dashed #000;
     padding-top: 10px;
   }
-  
+  @media print {
+  img {
+    display: block !important;
+    visibility: visible !important;
+  }
+}
+ 

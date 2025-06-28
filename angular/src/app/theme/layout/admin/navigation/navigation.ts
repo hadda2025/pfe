@@ -141,25 +141,29 @@ export const NavigationItems: NavigationItem[] = [
     title: '',
     type: 'group',
     icon: 'icon-group',
+     roles: ['Admin'],
     children: [
       {
         id: 'basic',
         title: 'Gestion-Sujets',
         type: 'collapse',
         icon: 'feather icon-file-text',
+         roles: ['Admin'],
         children: [
 
           {
             id: 'ajouter-stage',
             title: 'Ajouter sujet',
             type: 'item',
-            url: '/component/ajouter-stage'
+            url: '/component/ajouter-stage',
+             roles: ['Admin'],
           },
           {
             id: 'liste-stage',
             title: 'liste-sujets',
             type: 'item',
-            url: '/component/liste-stage'
+            url: '/component/liste-stage',
+             roles: ['Admin'],
           },
    
         ]
@@ -171,25 +175,29 @@ id: 'ui-component',
 title: '',
 type: 'group',
 icon: 'icon-group',
+ roles: ['Admin'],
 children: [
   {
   id: 'basic',
   title: 'Gestion-Jurys',
   type: 'collapse',
   icon: 'feather icon-users',
+   roles: ['Admin'],
   children: [
       {
       id: 'Affectation-jury',
       title: 'Affectation-jury',
       type: 'item',
-      url: '/component/Affectation-jury'
+      url: '/component/Affectation-jury',
+       roles: ['Admin'],
     },
   
  {
       id: 'liste-Affectation-jury',
       title: 'liste-Affectation-jury',
       type: 'item',
-      url: '/component/liste-Affectation-jury'
+      url: '/component/liste-Affectation-jury',
+       roles: ['Admin'],
     },  
   ]
 }
@@ -232,24 +240,28 @@ id: 'ui-component',
 title: '',
 type: 'group',
 icon: 'icon-group',
+ roles: ['Admin'],
 children: [
   {
   id: 'basic',
   title: 'Gestion-Salles',
   type: 'collapse',
   icon: 'feather icon-users',
+   roles: ['Admin'],
   children: [
     {
       id: 'Ajouter-salle',
       title: 'Ajouter-salle',
       type: 'item',
-      url: '/component/Ajouter-salle'
+      url: '/component/Ajouter-salle',
+       roles: ['Admin'],
     },
     {
       id: 'liste-salles',
       title: 'liste-salles',
       type: 'item',
-      url: '/component/liste-salles'
+      url: '/component/liste-salles',
+       roles: ['Admin'],
     },
    
   ]
@@ -331,12 +343,14 @@ id: 'ui-component',
 title: '',
 type: 'group',
 icon: 'icon-group',
+ roles: ['Admin'],
 children: [
 {
   id: 'basic',
   title: 'Gestion-Soutenances',
   type: 'collapse',
   icon: 'feather icon-users',
+   roles: ['Admin'],
   children: [
     
   
@@ -345,13 +359,15 @@ children: [
       id: 'planification-soutenance',
       title: 'planification-soutenance',
       type: 'item',
-      url: '/component/planification-soutenance'
+      url: '/component/planification-soutenance',
+       roles: ['Admin'],
     },
     {
       id: 'liste-soutenances',
       title: 'liste-soutenances planifiées',
       type: 'item',
-      url: '/component/liste-soutenances'
+      url: '/component/liste-soutenances',
+       roles: ['Admin'],
     },
 
   ]
