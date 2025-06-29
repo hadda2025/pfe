@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { Student, StudentsService } from 'src/app/services/students.service';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-ajouter-etudiant',
@@ -20,7 +21,8 @@ export default class AjouterEtudiantComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private studentsService: StudentsService,
-    private router: Router
+    private router: Router,
+    private toastr:ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -102,7 +104,8 @@ export default class AjouterEtudiantComponent implements OnInit {
 
       this.studentsService.createStudent(newStudent).subscribe({
         next: (response) => {
-          console.log('Étudiant ajouté avec succès:', response.data);
+          
+          this.toastr.success('Étudiant ajouté avec succès:');
           this.router.navigate(['/component/liste-etudiant']);
         },
         error: (error) => {

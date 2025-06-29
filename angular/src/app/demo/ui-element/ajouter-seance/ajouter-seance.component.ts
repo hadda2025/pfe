@@ -29,6 +29,7 @@ export default class AjouterSeanceComponent implements OnInit {
     public router: Router,
    
     private toastr: ToastrService,
+
   ) { }
 
   ngOnInit(): void {
@@ -69,23 +70,11 @@ export default class AjouterSeanceComponent implements OnInit {
     const newStart = this.toMinutes(newSeance.heureDebut);
     const newEnd = this.toMinutes(newSeance.heureFin);
 
-   /* for (const s of this.existingSeances) {
-
-      const existingStart = this.toMinutes(s.heureDebut);
-      const existingEnd = this.toMinutes(s.heureFin);
-
-      // Vérifie le chevauchement + pause de 15 minutes
-      if (
-        (newStart < existingEnd + 15) && (newEnd > existingStart)
-      ) {
-        this.errorMessage = `Conflit avec une séance existante (${s.heureDebut} - ${s.heureFin}). Une pause de 15 minutes est requise.`;
-        this.successMessage = '';
-        return;
-      }
-    }*/
+ 
 
     this.seanceService.createSeance(newSeance).subscribe({
       next: (res: any) => {
+        this.toastr.success('seance ajouter avec siccés')
         this.successMessage = res.message;
         this.errorMessage = '';
         this.seanceForm.reset();

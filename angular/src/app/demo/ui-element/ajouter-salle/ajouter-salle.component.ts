@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router'; // 
+import { ToastrService } from 'ngx-toastr';
 import { Room, RoomsService } from 'src/app/services/rooms.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 
@@ -32,7 +33,10 @@ export default class AjouterSalleComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private roomService: RoomsService,
-    private router: Router // ✅ Correction ici
+    private router: Router ,// ✅ Correction ici
+ 
+     private toastr:ToastrService,
+
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +54,8 @@ export default class AjouterSalleComponent implements OnInit {
 
       this.roomService.createRoom(nouvelleSalle).subscribe({
         next: () => {
-          alert('✅ Salle ajoutée avec succès !');
+          
+          this.toastr.success('Salle ajoutée avec succès !');
           this.router.navigate(['/component/liste-salles']); // ✅ Redirection
         },
         error: (error) => {

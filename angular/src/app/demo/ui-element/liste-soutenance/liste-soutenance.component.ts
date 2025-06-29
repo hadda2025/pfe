@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { PlageDatesService } from 'src/app/services/date.service';
 import { SeanceService } from 'src/app/services/seances.service';
 import { SoutenancesService } from 'src/app/services/soutenances.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-liste-soutenance',
@@ -90,16 +91,40 @@ export default class ListeSoutenanceComponent {
     this.router.navigate(['/soutenances/edit', soutenance._id]);
   }
 
-  onDeleteSoutenance(id: string): void {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette soutenance ?')) {
-      this.soutenanceService.deleteSoutenance(id).subscribe({
-        next: () => {
-          this.getSoutenances(); // Rafraîchir la liste
-        },
-        error: (err) => {
-          console.error('Erreur lors de la suppression :', err);
-        }
-      });
-    }
-  }
+       onDeleteSoutenance(id: string): void {
+        {
+          if(id!=undefined && id !=null)
+          {
+            Swal.fire({
+              title: 'Êtes-vous sûr?',
+              text: 'Vous ne pourrez pas récupérer entite soutenance',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Oui, supprimez-la!',
+              cancelButtonText: 'Non, gardez-la'
+            }).then((result : any) => {
+              if (result.value) {
+               // alert(id);
+               this.soutenanceService.deleteSoutenance(id)
+                .subscribe(res=>{
+                 this.getSoutenances();
+                })
+              Swal.fire(
+                'Supprimé!',
+                'Votre soutenance été supprimée.',
+                'success'
+              )
+  
+  
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire(
+                'Annulé',
+                'Votre niveau est en sécurité 🙂',
+                'error'
+              )
+              }
+            })
+          }
+        }}
+  
 }

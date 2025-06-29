@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AgentsService } from 'src/app/services/agents.service'; // adapte le chemin si besoin
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-liste-agent',
@@ -44,15 +45,46 @@ export default class ListeAgentComponent implements OnInit {
     );
   }
 
+
+
+
   deleteAgent(id: string): void {
-    if (confirm('Voulez-vous vraiment supprimer cet agent ?')) {
-      this.agentsService.deleteAgent(id).subscribe({
-        next: () => {
-          this.agents = this.agents.filter(agent => agent._id !== id);
-        },
-        error: (err) => {
-          console.error('Erreur lors de la suppression de l\'agent', err);
-        }
-      });
-    }
-  }}
+        {
+          if(id!=undefined && id !=null)
+          {
+            Swal.fire({
+              title: 'Êtes-vous sûr?',
+              text: 'Vous ne pourrez pas récupérer entite jury',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Oui, supprimez-la!',
+              cancelButtonText: 'Non, gardez-la'
+            }).then((result : any) => {
+              if (result.value) {
+               // alert(id);
+             this.agentsService.deleteAgent(id)
+                .subscribe(res=>{
+                  this.getAllAgents()
+                })
+              Swal.fire(
+                'Supprimé!',
+                'Votre jury été supprimée.',
+                'success'
+              )
+  
+  
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire(
+                'Annulé',
+                'Votre niveau est en sécurité 🙂',
+                'error'
+              )
+              }
+            })
+          }
+        }}
+
+
+
+
+}

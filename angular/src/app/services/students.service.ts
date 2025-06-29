@@ -20,7 +20,7 @@ export interface Student {
   password: string;
   numInscription: Number;
   classeDepartement: string; // <--- AJOUTER CECI
-        
+     affecter?: boolean;   
   dateCreation: string;  
 }
 

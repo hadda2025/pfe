@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TeachersService } from 'src/app/services/teachers.service'; // adapte le chemin
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listenseignants',
@@ -46,16 +47,39 @@ export default class ListenseignantsComponent implements OnInit {
     );
   }
 
-  deleteTeacher(id: string): void {
-    if (confirm('Voulez-vous vraiment supprimer cet enseignant ?')) {
-      this.teachersService.deleteTeacher(id).subscribe({
-        next: () => {
-          this.teachers = this.teachers.filter(teacher => teacher._id !== id);
-        },
-        error: (err) => {
-          console.error('Erreur lors de la suppression de l\'enseignant', err);
+  deleteTeacher(id:string)
+        {
+          if(id!=undefined && id !=null)
+          {
+            Swal.fire({
+              title: 'Êtes-vous sûr?',
+              text: 'Vous ne pourrez pas récupérer entite teacher',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Oui, supprimez-la!',
+              cancelButtonText: 'Non, gardez-la'
+            }).then((result : any) => {
+              if (result.value) {
+               // alert(id);
+               this.teachersService.deleteTeacher(id)
+                .subscribe(res=>{
+                  this.getAllTeachers()
+                })
+              Swal.fire(
+                'Supprimé!',
+                'Votre teacher été supprimée.',
+                'success'
+              )
+  
+  
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire(
+                'Annulé',
+                'Votre niveau est en sécurité 🙂',
+                'error'
+              )
+              }
+            })
+          }
         }
-      });
-    }
-  }
 }

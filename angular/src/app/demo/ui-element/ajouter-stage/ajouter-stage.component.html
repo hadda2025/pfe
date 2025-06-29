@@ -64,34 +64,46 @@
             <input type="text" id="encadrant_externe" formControlName="encadrant_externe" class="form-control" />
           </div>
 
-          <!-- Étudiant 1 -->
-          <div class="col-md-6">
-            <label for="student1">Étudiant 1</label>
-            <select id="student1" class="form-control" formControlName="student1">
-              <option [ngValue]="null">-- Sélectionnez un étudiant --</option>
-              <option *ngFor="let student of students" [ngValue]="student">
-                {{ student.firstName }} {{ student.lastName }}
-              </option>
-            </select>
-            <div *ngIf="stageForm.get('student1')?.invalid && stageForm.get('student1')?.touched" class="text-danger">
-              <small *ngIf="stageForm.get('student1')?.hasError('required')">L'étudiant 1 est requis.</small>
-            </div>
-          </div>
+         <!-- Étudiant 1 -->
+<div class="col-md-6">
+  <label for="student1">Étudiant 1</label>
+  <select id="student1" class="form-control" formControlName="student1">
+    <option [ngValue]="null">-- Sélectionnez un étudiant --</option>
+    <option
+      *ngFor="let student of students"
+      [ngValue]="student"
+      [disabled]="selectedStudent2Id === student._id"
+    >
+      {{ student.firstName }} {{ student.lastName }}
+    </option>
+  </select>
+</div>
 
-          <!-- Étudiant 2 -->
-          <div class="col-md-6">
-            <label for="student2">Étudiant 2</label>
-            <select id="student2" class="form-control" formControlName="student2">
-              <option [ngValue]="null">-- Sélectionnez un étudiant --</option>
-              <option *ngFor="let student of students" [ngValue]="student">
-                {{ student.firstName }} {{ student.lastName }}
-              </option>
-            </select>
-            <div *ngIf="stageForm.get('student2')?.invalid && stageForm.get('student2')?.touched" class="text-danger">
-              <small *ngIf="stageForm.get('student2')?.hasError('required')">L'étudiant 2 est requis.</small>
-            </div>
-          </div>
+<!-- Étudiant 2 -->
+<div class="col-md-6">
+  <label for="student2">Étudiant 2</label>
+  <select id="student2" class="form-control" formControlName="student2">
+    <option [ngValue]="null">-- Sélectionnez un étudiant --</option>
+    <option
+      *ngFor="let student of students"
+      [ngValue]="student"
+      [disabled]="selectedStudent1Id === student._id"
+    >
+      {{ student.firstName }} {{ student.lastName }}
+    </option>
+  </select>
+</div>
 
+
+
+
+
+
+
+
+
+
+          
           <!-- Date de début -->
           <div class="col-md-6">
             <label for="DateD" class="form-label">Date de début</label>

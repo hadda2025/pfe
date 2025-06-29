@@ -274,7 +274,7 @@ loadExaminateur(): void {
           this.seancesDisponibles = res;
           this.dateDebut = plage.dateDebut;
           this.salle = salle;
-          this.form.patchValue({ plage: plage._id, room: salle._id });
+          this.form.patchValue({ plage: plage._id, room: salle._id ,});
         } else {
           if (roomIdx + 1 < this.salles.length) {
             this.rechercherSeancesDisponibles(plageIdx, roomIdx + 1);

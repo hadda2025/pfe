@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { SessionsService } from 'src/app/services/sessions.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-liste-session',
@@ -40,18 +41,42 @@ export default class ListeSessionComponent implements OnInit {
   }
 
   // Méthode de suppression d'une session
-  deleteSession(sessionId: string): void {
-    this.sessionService.deleteSession(sessionId).subscribe({
-      next: (response) => {
-        console.log('Session supprimée:', response);
-        this.getSessions(); // Rafraîchir la liste après suppression
-      },
-      error: (error) => {
-        console.error('Erreur lors de la suppression de la session:', error);
-      }
-    });
-  }
-
+    deleteSession(sessionId: string): void {
+          {
+            if(sessionId!=undefined && sessionId !=null)
+            {
+              Swal.fire({
+                title: 'Êtes-vous sûr?',
+                text: 'Vous ne pourrez pas récupérer entite session',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Oui, supprimez-la!',
+                cancelButtonText: 'Non, gardez-la'
+              }).then((result : any) => {
+                if (result.value) {
+                 // alert(id);
+              this.sessionService.deleteSession(sessionId)
+                  .subscribe(res=>{
+                    this.getSessions()
+                  })
+                Swal.fire(
+                  'Supprimé!',
+                  'Votre session été supprimée.',
+                  'success'
+                )
+    
+    
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                  'Annulé',
+                  'Votre niveau est en sécurité 🙂',
+                  'error'
+                )
+                }
+              })
+            }
+    
+          }}
   
 
 // Optionnel : méthode pour filtrer la liste

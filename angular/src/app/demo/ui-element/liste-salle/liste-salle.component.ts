@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Room, RoomsService } from 'src/app/services/rooms.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-liste-salle',
@@ -49,19 +50,50 @@ export default class ListeSalleComponent implements OnInit {
     );
   }
 
-  deleteRoom(id: string): void {
-    if (confirm('Voulez-vous vraiment supprimer cette salle ?')) {
-      this.roomService.deleteRoom(id).subscribe({
-        next: () => {
-          this.rooms = this.rooms.filter((salle) => salle._id !== id);
-        },
-        error: (err: any) => {
-          console.error('Erreur lors de la suppression de la salle :', err);
-        },
-      });
-    }
-  }
+ 
 
+
+
+
+
+
+
+   deleteRoom(id: string): void {
+        {
+          if(id!=undefined && id !=null)
+          {
+            Swal.fire({
+              title: 'Êtes-vous sûr?',
+              text: 'Vous ne pourrez pas récupérer entite salle',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Oui, supprimez-la!',
+              cancelButtonText: 'Non, gardez-la'
+            }).then((result : any) => {
+              if (result.value) {
+               // alert(id);
+             this.roomService.deleteRoom(id)
+                .subscribe(res=>{
+                  this.getAllRooms()
+                })
+              Swal.fire(
+                'Supprimé!',
+                'Votre salle été supprimée.',
+                'success'
+              )
+  
+  
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire(
+                'Annulé',
+                'Votre niveau est en sécurité 🙂',
+                'error'
+              )
+              }
+            })
+          }
+  
+        }}
   editRoom(id: string): void {
     this.router.navigate(['/modifier-salle', id]);
   }

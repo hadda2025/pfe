@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { AgentsService, Agent } from 'src/app/services/agents.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-ajouter-agent',
@@ -19,7 +20,9 @@ export default class AjouterAgentComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private agentsService: AgentsService,
-    private router: Router
+    private router: Router,
+    private toastr:ToastrService,
+   
   ) {}
 
   ngOnInit(): void {
@@ -53,7 +56,8 @@ export default class AjouterAgentComponent implements OnInit {
 
       this.agentsService.createAgent(newAgent).subscribe({
         next: (response) => {
-          console.log('Agent ajouté avec succès:', response);
+         
+          this.toastr.success('Agent ajouté avec succès:');
           this.router.navigate(['/component/liste-agent']);
         },
         error: (err) => {

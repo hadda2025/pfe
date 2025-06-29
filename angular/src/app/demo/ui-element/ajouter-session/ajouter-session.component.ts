@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { SessionsService } from 'src/app/services/sessions.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -20,7 +21,8 @@ export default class AjouterSessionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private sessionService: SessionsService,
-    private router: Router
+    private router: Router,
+    private toaster:ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +47,8 @@ export default class AjouterSessionComponent implements OnInit {
 
       this.sessionService.createSession(newSession).subscribe({
         next: (response:any) => {
-          console.log('Session ajoutée avec succès:', response.data);
+         
+          this.toaster.success('session ajiuter avec succés' )
           this.router.navigate(['/component/liste-sessions']); // Ajuste la route selon ton projet
         },
         error: (error) => {

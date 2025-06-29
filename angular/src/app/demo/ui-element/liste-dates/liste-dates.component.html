@@ -3,7 +3,7 @@
 
     <!-- Titre + barre de recherche (optionnelle, à ajouter si besoin) -->
     <div class="d-flex justify-content-between align-items-center mb-2 px-2">
-      <h4>📅 Liste des Plages de Dates</h4>
+      <h4>📅 Liste des Dates</h4>
       <!-- Si tu veux une recherche, tu peux l’ajouter ici avec class="form-control form-control-sm" -->
     </div>
 
@@ -21,22 +21,22 @@
         <thead class="table-light">
           <tr>
             <th>#</th>
-            <th>Date de début</th>
-            <th>Date de fin</th>
+            <th>Date de soutenance</th>
+            <!--<th>Date de fin</th> -->
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let plage of plagesDates; let i = index">
             <th scope="row">{{ i + 1 }}</th>
-            <td>{{ plage.dateDebut | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ plage.dateFin | date: 'dd/MM/yyyy' }}</td>
-            <td>
+            <td class="text-center" >{{ plage.dateDebut | date: 'dd/MM/yyyy' }}</td>
+           <!---- <td>{{ plage.dateFin | date: 'dd/MM/yyyy' }}</td> -->
+            <td class="text-center" >
               <div class="btn-group btn-group-sm">
                 <button class="btn btn-primary" [routerLink]="['/component/update-date', plage._id]">
                   ✏️
                 </button>
-                <button class="btn btn-danger" (click)="onDelete(plage._id)">
+                <button class="btn btn-danger ms-1" (click)="onDelete(plage._id)">
                   🗑️
                 </button>
               </div>

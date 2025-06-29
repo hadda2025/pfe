@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SujetFinEtudeService } from 'src/app/services/stages.service';
 import { StudentsService } from 'src/app/services/students.service';
 import { TeachersService } from 'src/app/services/teachers.service';
@@ -28,13 +29,16 @@ export default class AjouterStageComponent implements OnInit {
   stageForm!: FormGroup;
   teachers: any[] = [];
   students: any[] = [];
+  selectedStudent1Id: string | null = null;
+selectedStudent2Id: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private stageService: SujetFinEtudeService,
     private teacherService: TeachersService,
     private studentService: StudentsService,
-    private router: Router
+    private router: Router,
+    private toastr:ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -61,6 +65,14 @@ export default class AjouterStageComponent implements OnInit {
     this.stageForm.get('DateF')?.valueChanges.subscribe(() => {
       this.stageForm.updateValueAndValidity();
     });
+
+     this.stageForm.get('student1')?.valueChanges.subscribe((student: any) => {
+    this.selectedStudent1Id = student?._id || null;
+  });
+
+  this.stageForm.get('student2')?.valueChanges.subscribe((student: any) => {
+    this.selectedStudent2Id = student?._id || null;
+  });
   }
 
   getAllTeachers(): void {
@@ -74,16 +86,19 @@ export default class AjouterStageComponent implements OnInit {
     });
   }
 
-  getAllStudents(): void {
-    this.studentService.getAllStudents().subscribe({
-      next: (response: any) => {
-        this.students = response.data;
-      },
-      error: (error) => {
-        console.error('Erreur lors de la récupération des étudiants', error);
-      },
-    });
-  }
+
+ getAllStudents(): void {
+  this.studentService.getAllStudents().subscribe({
+    next: (response: any) => {
+      // ✅ Filtrer uniquement ceux qui ont affecter = false
+      this.students = response.data.filter((student: any) => student.affecter === false);
+    },
+    error: (error) => {
+      console.error('Erreur lors de la récupération des étudiants', error);
+    },
+  });
+}
+
 
   onSubmit(): void {
     if (this.stageForm.invalid) {
@@ -94,7 +109,10 @@ export default class AjouterStageComponent implements OnInit {
     const etudiant1 = this.stageForm.value.student1;
     const etudiant2 = this.stageForm.value.student2;
 
-    const studentIds = [etudiant1, etudiant2].map((s: any) => s._id);
+    //const studentIds = [etudiant1, etudiant2].map((s: any) => s._id);
+    const studentIds = [etudiant1, etudiant2]
+  .filter(s => s !== null && s !== undefined)
+  .map((s: any) => s._id);
 
     const stageData = {
       ...this.stageForm.value,
@@ -103,7 +121,8 @@ export default class AjouterStageComponent implements OnInit {
 
     this.stageService.createSujet(stageData).subscribe({
       next: () => {
-        alert('Stage ajouté avec succès.');
+      
+        this.toastr.success("sujet ajouté avec succés.")
         this.router.navigate(['./component/liste-stage']);
       },
       error: (err) => {

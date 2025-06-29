@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SujetFinEtudeService } from 'src/app/services/stages.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-liste-affectation-jury',
@@ -66,15 +67,40 @@ export default class ListeAffectationJuryComponent implements OnInit {
   }
 
   // Supprime une affectation
-  onDeleteAffectation(sujetId: string): void {
-    if (confirm("Êtes-vous sûr de vouloir supprimer cette affectation ?")) {
-      this.sujetService.deleteSujet(sujetId).subscribe({
-        next: () => {this.loadAffectations(),
-        this.loadJuryList()},
-        error: (err) => {
-          console.error("Erreur lors de la suppression de l'affectation :", err);
-        }
-      });
-    }
-  }
-}
+
+  
+      onDeleteAffectation(sujetId: string): void {
+        {
+          if(sujetId!=undefined && sujetId !=null)
+          {
+            Swal.fire({
+              title: 'Êtes-vous sûr?',
+              text: 'Vous ne pourrez pas récupérer entite jury',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Oui, supprimez-la!',
+              cancelButtonText: 'Non, gardez-la'
+            }).then((result : any) => {
+              if (result.value) {
+               // alert(id);
+               this.sujetService.deleteSujet(sujetId)
+                .subscribe(res=>{
+                  this.loadJuryList()
+                })
+              Swal.fire(
+                'Supprimé!',
+                'Votre jury été supprimée.',
+                'success'
+              )
+  
+  
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire(
+                'Annulé',
+                'Votre niveau est en sécurité 🙂',
+                'error'
+              )
+              }
+            })
+          }
+        }}}

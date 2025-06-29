@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PlageDate, PlageDatesService } from 'src/app/services/date.service';  // Assurez-vous d'importer le service correctement
+import Swal from 'sweetalert2';
 // Assurez-vous d'importer le modèle correctement
 
 @Component({
@@ -46,23 +47,42 @@ export  default class ListeDatesComponent implements OnInit {
   }
 
   // Fonction pour supprimer une plage de date
-  onDelete(id: string | undefined): void {
-  if (!id) {
-    this.errorMessage = 'Identifiant de la plage de date manquant';
-    return;
-  }
+ 
 
-  if (confirm('Êtes-vous sûr de vouloir supprimer cette plage de date ?')) {
-    this.plageDatesService.deletePlageDate(id).subscribe({
-      next: (res) => {
-        this.loadPlagesDates();  // Recharge la liste après suppression
-        alert('Plage de date supprimée avec succès');
-      },
-      error: (err) => {
-        this.errorMessage = 'Erreur lors de la suppression';
-      }
-    });
-  }
-}
 
-}
+onDelete(id: string | undefined): void 
+      {
+        if(id!=undefined && id !=null)
+        {
+          Swal.fire({
+            title: 'Êtes-vous sûr?',
+            text: 'Vous ne pourrez pas récupérer entite student',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Oui, supprimez-la!',
+            cancelButtonText: 'Non, gardez-la'
+          }).then((result : any) => {
+            if (result.value) {
+             // alert(id);
+             this.plageDatesService.deletePlageDate(id)
+              .subscribe(res=>{
+                this.loadPlagesDates()
+              })
+            Swal.fire(
+              'Supprimé!',
+              'Votre student été supprimée.',
+              'success'
+            )
+
+
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire(
+              'Annulé',
+              'Votre niveau est en sécurité 🙂',
+              'error'
+            )
+            }
+          })
+        }
+
+      }}
